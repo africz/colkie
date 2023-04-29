@@ -19,6 +19,11 @@ export interface createUser {
   firstname: string;
   lastname: string;
 }
+export interface authUser {
+  username: string;
+  password: string;
+}
+
 export interface token {
   username: string;
   email: string;

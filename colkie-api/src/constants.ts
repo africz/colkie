@@ -8,6 +8,7 @@
 
 export const ACCEPTED = 'Accepted';
 export const A_CREATE_USER = '/users/createUser';
+export const A_AUTH_USER = '/users/authUser';
 export const DEBUG_LEVEL = 'debug';
 export const DENIED = 'Denied';
 export const ERROR_LEVEL = 'error';
