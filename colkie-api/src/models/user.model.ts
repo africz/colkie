@@ -27,24 +27,29 @@ export class User extends Entity {
   @property({
     type: 'string',
   })
-  email?: string;
+  email: string;
 
   @property({
     type: 'string',
   })
-  password?: string;
+  password: string;
 
   @property({
     type: 'string',
   })
-  firstname?: string;
+  firstname: string;
 
   @property({
     type: 'string',
   })
-  lastname?: string;
+  lastname: string;
 
-}
+  @property({
+    type: 'string',
+  })
+  token: string;
+
+  }
 
 export interface UserRelations {
   // describe navigational properties here

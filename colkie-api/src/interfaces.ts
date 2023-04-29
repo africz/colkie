@@ -19,3 +19,8 @@ export interface createUser {
   firstname: string;
   lastname: string;
 }
+export interface token {
+  username: string;
+  email: string;
+  expireTime:number;
+}

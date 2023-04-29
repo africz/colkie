@@ -10,7 +10,7 @@ import { post, requestBody, response, param, RequestBody } from '@loopback/rest'
 import * as constants from '../constants';
 import { log } from '../helpers/logger';
 import {
-  createUser,
+  createUser, token,
 } from '../interfaces';
 import { ColkieController, ResponseError, ResponseSuccess } from './colkie.controller';
 import { User } from '../models';
@@ -18,6 +18,8 @@ import { UserRepository } from '../repositories/user.repository';
 import { Response, RestBindings } from '@loopback/rest';
 import { inject } from '@loopback/core';
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import config from '../config.json';
 
 /**
  * This controller handle all user related functions such as
@@ -118,11 +120,19 @@ export class UserController extends ColkieController {
       }
       else {
         const newUserRecord: any = new User();
+
         newUserRecord.username = username;
-        newUserRecord.password = await this.encodePassword(password);
         newUserRecord.email = email;
+        newUserRecord.password = await this.encodePassword(password);
         newUserRecord.firstname = firstname;
         newUserRecord.lastname = lastname;
+        newUserRecord.created= Date.now();
+        newUserRecord.updated= Date.now();
+        newUserRecord.token = await this.generateToken({ username: username, email: email, expireTime: 0 }).catch(error => {
+          log.trace(func, 'error(generateToken):', error);
+          throw new Error(error);
+        });
+
         log.trace(func, 'newUserRecord:', newUserRecord);
 
         const newRecord = await this.userRepository
@@ -159,4 +169,13 @@ export class UserController extends ColkieController {
     return retVal;
   }//encodePassword
 
+  /**
+   * @param  {token} token 
+   * @returns {Promise<string> encoded token}
+   */
+  async generateToken(data: token): Promise<string> {
+    data.expireTime = Date.now() + config.tokenExpire;
+    const retVal = jwt.sign(data, config.tokenSalt);
+    return retVal;
+  }
 } //UserController

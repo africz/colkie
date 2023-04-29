@@ -1,20 +1,8 @@
 {
     "hostName": "Attila's dev",
     "rootFolder":"/var/www/html",
-    "Colkie_gateway": {
-        "url": "http://127.0.0.1:5000/gateway",
-        "password": {
-            "instance_1": "vk3sJyYFVgp8kvmm",
-            "instance_2": "VRedKaQ4pnJ5wmpb",
-            "instance_3": "Byfu3LstuW",
-            "instance_4": "kJDDwxJJ9WZyoz4",
-            "instance_5": "vk3sJyYFVgp8kvmm",
-            "instance_6": "VRedKaQ4pnJ5wmpb",
-            "instance_7": "telecom2",
-            "instance_8": "kJDDwxJJ9WZyoz4"
-
-        }
-    },
+    "tokenSalt":"$2b$10$jNXipXZDymiJwAou0.ffqek64XAat1Fq2FHX6x3IC5OhCNtYjP4z6",
+    "tokenExpire":600,
     "rest": {
         "ssl_key": "/var/www/html/certs/colkie-key.pem",
         "ssl_cert": "/var/www/html/certs/colkie.pem",
