@@ -6,14 +6,12 @@
  */
 import fs from 'fs-extra';
 import config from './config.json';
-import * as errors from './errors';
 import {log} from './helpers/logger';
 import {ApplicationConfig, ExpressServer} from './server';
 
 export * from './server';
 
 export async function main(options: ApplicationConfig = {}): Promise<void> {
-  const func = 'main(),index.ts@';
   const server = new ExpressServer(options);
   await server.boot();
   await server.start();

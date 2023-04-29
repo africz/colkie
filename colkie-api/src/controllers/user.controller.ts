@@ -6,7 +6,7 @@
  */
 
 import { repository } from '@loopback/repository';
-import { post, requestBody, response, param, RequestBody } from '@loopback/rest';
+import { post, requestBody, response} from '@loopback/rest';
 import * as constants from '../constants';
 import * as errors from '../errors';
 import { log } from '../helpers/logger';
@@ -20,9 +20,8 @@ import { UserRepository } from '../repositories/user.repository';
 import { Response, RestBindings } from '@loopback/rest';
 import { inject } from '@loopback/core';
 import bcrypt from "bcrypt";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import config from '../config.json';
-import { use } from 'chai';
 
 /**
  * This controller handle all user related functions such as
@@ -134,7 +133,7 @@ export class UserController extends ColkieController {
 
       log.trace(func, 'newUserRecord:', newUserRecord);
 
-      const newRecord = await this.userRepository
+      await this.userRepository
         .create(newUserRecord)
         .catch(error => {
           log.trace(func, 'error(create):', error);
@@ -277,6 +276,7 @@ export class UserController extends ColkieController {
   async generateToken(data: token): Promise<string> {
     const func = await this.getFunc('generateToken');
     log.trace(func, 'data:', data);
+    //expire time in minutes
     data.expireTime = Date.now() + config.tokenExpire*1000*60;
     log.trace(func, 'now:', new Date(Date.now()).toLocaleTimeString());
     log.trace(func, 'token expireTime:', new Date(data.expireTime).toLocaleTimeString());

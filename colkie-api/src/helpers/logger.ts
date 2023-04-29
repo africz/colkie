@@ -100,7 +100,9 @@ function addLineNum(level: string, args: any) {
   }
 
   if (level === 'fatal') {
+    //sending email was removed from here to make it simplier
   }
+
 }
 
 log.fatal = function () {

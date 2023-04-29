@@ -5,12 +5,6 @@
  * @copyright Attila Fricz.
  */
 
-import {JSONObject} from '@loopback/core';
-
-export interface retValJSON {
-  response: string;
-  message: any;
-}
 
 export interface createUser {
   username: string;
