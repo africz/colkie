@@ -1,0 +1,51 @@
+{
+  "name": "typedoc-source-example",
+  "version": "0.0.2",
+  "description": "Merge source with example block",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "lint": "eslint ./src --ext .ts",
+    "prepublishOnly": "npm run lint && npm run build && npm run test",
+    "build": "rm -rf dist && tsc",
+    "release": "standard-version",
+    "demo": "npm run build && typedoc --tsconfig ./tsconfig.test.json",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/africz/typedoc-source-example.git"
+  },
+  "author": "Attila Fricz",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10.8.0"
+  },
+  "bugs": {
+    "url": "https://github.com/africz/typedoc-source-example.git/issues"
+  },
+  "homepage": "https://github.com/africz/typedoc-source-example.git#readme",
+  "keywords": [
+    "typedocplugin",
+    "sources",
+    "source",
+    "code"
+  ],
+  "peerDependencies": {
+    "typedoc": ">=0.22.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
+    "jest": "^27.3.1",
+    "standard-version": "^9.3.2",
+    "ts-jest": "^27.0.7",
+    "typedoc": "^0.22.10",
+    "typescript": "^4.5.2"
+  }
+}

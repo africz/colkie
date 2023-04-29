@@ -1,0 +1,5 @@
+clear
+rm -f ../log/*.log
+#mysql -unodeColkie -pToledo2017! Colkie < /home/osboxes/clean-db.sql
+npm start test
+

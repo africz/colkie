@@ -1,0 +1,48 @@
+{
+    "plugins": [
+        "plugins/markdown",
+        "jsdoc-mermaid",
+        "node_modules/jsdoc-plugin-typescript"
+    ],
+    "typescript": {
+        "moduleRoot": "src"
+    },
+    "recurseDepth": 10,
+    "source": {
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_|(test)",
+        "include": [
+            "README.md"
+        ],
+        "exclude": [
+            "node_modules",
+            "log",
+            "sql"
+        ]
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": [
+            "jsdoc",
+            "closure"
+        ]
+    },
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": false,
+        "search": true,
+        "systemName": "Colkie-NODE",
+        "systemSummary": "Colkie Node module",
+        "systemLogo": "",
+        "systemColor": "",
+        "copyright": "2021 Telecom2 Ltd."
+    },
+    "opts": {
+        "template": "node_modules/jsdoc/templates/default",
+        "encoding": "utf8",
+        "destination": "./jsdoc/",
+        "recurse": true,
+        "verbose": true
+    }
+}

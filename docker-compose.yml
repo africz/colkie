@@ -1,0 +1,53 @@
+version: '3.7'
+
+#Docker Networks
+networks:
+  colkie-network:
+    name: colkie-network
+    driver: bridge
+
+services:
+  db-colkie:
+    image: mysql:5.7
+    container_name: db-colkie
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: colkie
+      MYSQL_DATABASE: colkie
+      MYSQL_USER: colkie
+      MYSQL_PASSWORD: colkie
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - type: bind
+        source: ./colkie-api/sql
+        target: /var/www/sql
+    networks:
+      - colkie-network
+  api-colkie:
+    build:
+      dockerfile: docker/node/Dockerfile 
+      context: .
+    container_name: api-colkie
+    restart: always
+    depends_on:
+      - db-colkie
+    ports:
+      - "8080:4000"
+    volumes:
+      - type: bind
+        source: ./colkie-api
+        target: /var/www/html
+    stdin_open: true
+    tty: true
+    networks:
+      - colkie-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  db:
+  api-colkie:
+ 
+

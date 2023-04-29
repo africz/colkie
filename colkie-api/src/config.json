@@ -1,0 +1,110 @@
+{
+    "hostName": "Attila's dev",
+    "rootFolder":"/var/www/html",
+    "Colkie_gateway": {
+        "url": "http://127.0.0.1:5000/gateway",
+        "password": {
+            "instance_1": "vk3sJyYFVgp8kvmm",
+            "instance_2": "VRedKaQ4pnJ5wmpb",
+            "instance_3": "Byfu3LstuW",
+            "instance_4": "kJDDwxJJ9WZyoz4",
+            "instance_5": "vk3sJyYFVgp8kvmm",
+            "instance_6": "VRedKaQ4pnJ5wmpb",
+            "instance_7": "telecom2",
+            "instance_8": "kJDDwxJJ9WZyoz4"
+
+        }
+    },
+    "rest": {
+        "ssl_key": "/var/www/html/certs/colkie-key.pem",
+        "ssl_cert": "/var/www/html/certs/colkie.pem",
+        "protocol": "http",
+        "listenOnStart": false,
+        "apiExplorer": { 
+            "disabled": false
+        }
+    },
+    "db": {
+        "host": "db-colkie",
+        "port": 3306,
+        "url": "",
+        "database": "colkie",
+        "testdatabase": "colkie-test",
+        "password": "colkie",
+        "name": "db",
+        "user": "colkie",
+        "connector": "loopback-connector-mysql2"
+    },
+    "log": {
+        "basePath": "/",
+        "host": "",
+        "port": 4000,
+        "errorEventName": "node",
+        "logDirectory": "./log",
+        "fileNamePattern": "node-roll-<DATE>.log",
+        "dateFormat": "YYYY.MM.DD",
+        "levelNames": "trace,debug,info,warn,error,fatal",
+        "level": "trace",
+        "module": [
+            {
+                "name": "slow",
+                "status": "off"
+            },
+            {
+                "name": "chat",
+                "status": "off"
+            },
+            {
+                "name": "login",
+                "status": "off"
+            }
+
+        ]
+    },
+    "logserver": {
+        "basePath": "/log",
+        "host": "",
+        "port": 2000,
+        "errorEventName": "logserver",
+        "logDirectory": "./log",
+        "fileNamePattern": "logserver-roll-<DATE>.log",
+        "dateFormat": "YYYY.MM.DD",
+        "levelNames": "trace,debug,info,warn,error,fatal",
+        "level": "debug"
+    },
+    "streamlog": {
+        "errorEventName": "stream",
+        "logDirectory": "./log",
+        "fileNamePattern": "stream-roll-<DATE>.log",
+        "dateFormat": "YYYY.MM.DD",
+        "levelNames": "trace,debug,info,warn,error,fatal",
+        "level": "trace",
+        "mail": "on",
+        "db": "off",
+        "auth_required": false,
+        "module": [
+            {
+                "name": "chat",
+                "status": "on"
+            },
+            {
+                "name": "login",
+                "status": "on"
+            }
+        ]
+    },
+    "ping": {
+        "timeout": 30
+    },
+    "debug": {
+        "deleteChat": true,
+        "slowExecution": {
+            "default": 2000,
+            "incomeTips": 2000,
+            "pull": 2000,
+            "push": 2000,
+            "subscribeList": 2000,
+            "updateStatus": 2000
+        }
+    },
+}

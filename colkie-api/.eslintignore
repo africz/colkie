@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+jsdoc/
+src/models
+src/controllers/ping.controller.ts
+src/controllers/hello.controller.ts
+src/controllers/user-dummy.controller.ts
+src/controllers/transaction-log.controller.ts
+
+.eslintrc.js

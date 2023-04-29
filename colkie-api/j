@@ -1,0 +1,11 @@
+#npm run build
+rm -rf ./jsdoc/*
+#export NODE_OPTIONS="--max-old-space-size=(X * 1024)" # Increase to X GB
+#to see max-old-space-size
+#node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
+export NODE_OPTIONS="--max-old-space-size=8192"
+#jsdoc -c ./jsdoc.json .
+#
+#npx typedoc --sort static-first --sort alphabetical
+npx typedoc --darkHighlightTheme dark-plus
+
