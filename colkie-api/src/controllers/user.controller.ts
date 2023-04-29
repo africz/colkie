@@ -12,7 +12,7 @@ import * as errors from '../errors';
 import { log } from '../helpers/logger';
 import {
   authUser,
-  createUser, token,
+  createUser, token, validateToken,
 } from '../interfaces';
 import { ColkieController, ResponseError, ResponseSuccess } from './colkie.controller';
 import { User } from '../models';
@@ -20,8 +20,9 @@ import { UserRepository } from '../repositories/user.repository';
 import { Response, RestBindings } from '@loopback/rest';
 import { inject } from '@loopback/core';
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import config from '../config.json';
+import { use } from 'chai';
 
 /**
  * This controller handle all user related functions such as
@@ -89,6 +90,7 @@ export class UserController extends ColkieController {
             email: { type: 'string' },
             firstname: { type: 'string' },
             lastname: { type: 'string' },
+            token: { type: 'string' }
           },
         },
       },
@@ -97,7 +99,9 @@ export class UserController extends ColkieController {
     const func = await this.getFunc('createUser');
     log.info(func, 'data:', data);
     try {
-      const { username, password, email, firstname, lastname } = data;
+      const { username, password, email, firstname, lastname, token } = data;
+      await this.validateToken({ username: username, token: token });
+
       const filter = {
         where: {
           and: [
@@ -168,15 +172,19 @@ export class UserController extends ColkieController {
    * Response Success
    * ----------------
    * {
-   *    "status":"200",
-   *    "message": <token>
+   *    "status":200,
+   *    "message": {
+   *      "username":"testuser",
+   *      "userId":12,
+   *      "token":<token>
+   *    }
    * }
    *
    * Response Error
    * --------------
    * {
-   *    "response":"Error",
-   *    "message":"New user is NULL"
+   *    "status":400,
+   *    "message":"Password not match!"
    * }
    */
 
@@ -226,16 +234,15 @@ export class UserController extends ColkieController {
           log.error(func, 'error(generateToken):', error);
           throw new Error(error);
         });
-      }else
-      {
+      } else {
         throw new Error(errors.PASSWORD_NOT_MATCH);
       }
 
       this.response.status(200).send({
         message: {
-          username:user.username,
-          userId:user.id,
-          token:token
+          username: user.username,
+          userId: user.id,
+          token: token
         }
       });
       log.info(func, 'User authentication was successful!');
@@ -255,7 +262,7 @@ export class UserController extends ColkieController {
    * @returns {Promise<string> encodePassword}
    */
   async encodePassword(password: string): Promise<string> {
-    const func = await this.getFunc('createUser');
+    const func = await this.getFunc('encodePassword');
     log.trace(func, 'password:', password);
     const salt = bcrypt.genSaltSync(10);
     const retVal = await bcrypt.hash(password, salt);
@@ -264,12 +271,37 @@ export class UserController extends ColkieController {
   }//encodePassword
 
   /**
-   * @param  {token} token 
+   * @param  {token} data 
    * @returns {Promise<string> encoded token}
    */
   async generateToken(data: token): Promise<string> {
-    data.expireTime = Date.now() + config.tokenExpire;
+    const func = await this.getFunc('generateToken');
+    log.trace(func, 'data:', data);
+    data.expireTime = Date.now() + config.tokenExpire*1000*60;
+    log.trace(func, 'now:', new Date(Date.now()).toLocaleTimeString());
+    log.trace(func, 'token expireTime:', new Date(data.expireTime).toLocaleTimeString());
     const retVal = jwt.sign(data, config.tokenSalt);
     return retVal;
   }
+
+  /**
+   * @param  {validateToken} data
+   * @returns {Promise<void> }
+   */
+  async validateToken(data: validateToken): Promise<void> {
+    const func = await this.getFunc('validateToken');
+    const { username, token } = data;
+    log.trace(func, 'data:', data);
+    const payload: any = jwt.verify(token, config.tokenSalt);
+    log.trace(func, 'payload:', payload);
+    if (payload.username !== username) {
+      throw new Error(errors.USER_NOT_EXISTS);
+    }
+    if (payload.expireTime < Date.now()) {
+      log.trace(func, 'payload.expireTime:', new Date(payload.expireTime).toLocaleTimeString());
+      log.trace(func, 'now:', new Date(Date.now()).toLocaleTimeString());
+      throw new Error(errors.TOKEN_EXPIRED);
+    }
+  }//validateToken
+
 } //UserController

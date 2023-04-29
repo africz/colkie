@@ -18,6 +18,7 @@ export interface createUser {
   email: string;
   firstname: string;
   lastname: string;
+  token: string;
 }
 export interface authUser {
   username: string;
@@ -29,3 +30,8 @@ export interface token {
   email: string;
   expireTime:number;
 }
+export interface validateToken {
+  username: string;
+  token:string;
+}
+
