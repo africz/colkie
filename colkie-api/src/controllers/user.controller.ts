@@ -232,9 +232,13 @@ export class UserController extends ColkieController {
       }
 
       this.response.status(200).send({
-        message: token
+        message: {
+          username:user.username,
+          userId:user.id,
+          token:token
+        }
       });
-      log.info(func, 'User creation was successful!', user);
+      log.info(func, 'User authentication was successful!');
       return this.response;
     } catch (error) {
       this.response.status(400).send({
