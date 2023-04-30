@@ -25,7 +25,7 @@ export interface token {
   email: string;
   expireTime: number;
 }
-export interface validateToken {
+export interface validateTokenParams {
   username: string;
   token: string;
 }
@@ -39,8 +39,14 @@ export interface validateString {
   char?: boolean;
 }
 
-export interface getNextTestValue
-{
-  username:string;
-  email:string;
+export interface getNextTestValue {
+  username: string;
+  email: string;
+}
+
+export interface sendMessage {
+  room: number;
+  username: string;
+  message: string;
+  token: string;
 }

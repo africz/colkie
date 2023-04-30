@@ -5,18 +5,15 @@
     "./src/application.ts",
     "./src/server.ts",
     "./src/constants.ts",
-    "./src/apicalls.ts",
     "./src/errors.ts",
     "./src/interfaces.ts",
     "./src/controllers/index.ts",
     "./src/datasources/index.ts",
     "./src/helpers/getdatabase.ts",
     "./src/helpers/getfunc.ts",
-    "./src/helpers/listing-array.ts",
     "./src/helpers/logger.ts",
-    "./src/helpers/Colkietoken.ts",
     "./src/models/index.ts",
     "./src/repositories/index.ts"
   ],
-  "out": "jsdoc"
+  "out": "./public/jsdoc"
 }

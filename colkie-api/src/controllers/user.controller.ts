@@ -12,7 +12,7 @@ import * as errors from '../errors';
 import { log } from '../helpers/logger';
 import {
   authUser,
-  createUser, token, validateToken,
+  createUser, token, validateTokenParams
 } from '../interfaces';
 import { ColkieController, ResponseError, ResponseSuccess } from './colkie.controller';
 import { User } from '../models';
@@ -22,7 +22,7 @@ import { inject } from '@loopback/core';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from '../config.json';
-import { validateEmail, validateString } from '../helpers/validate';
+import { validateEmail, validateString,validateToken } from '../helpers/validate';
 
 /**
  * This controller handle all user related functions such as
@@ -103,7 +103,7 @@ export class UserController extends ColkieController {
       const {authname,username, password, email, firstname, lastname, token } = data;
       //token is validated here due this is the most important validation, not hidden
       //in validateCreateUser to make it visible as possible.
-      await this.validateToken({ username: authname, token: token });
+      await validateToken({ username: authname, token: token });
       await this.validateCreateUser(data);
       const filter = {
         where: {
@@ -290,25 +290,6 @@ export class UserController extends ColkieController {
     return retVal;
   }
 
-  /**
-   * @param  {validateToken} data
-   * @returns {Promise<void> }
-   */
-  async validateToken(data: validateToken): Promise<void> {
-    const func = await this.getFunc('validateToken');
-    const { username, token } = data;
-    log.trace(func, 'data:', data);
-    const payload: any = jwt.verify(token, config.tokenSalt);
-    log.trace(func, 'payload:', payload);
-    if (payload.username !== username) {
-      throw new Error(errors.USER_NOT_EXISTS);
-    }
-    if (payload.expireTime < Date.now()) {
-      log.trace(func, 'payload.expireTime:', new Date(payload.expireTime).toLocaleTimeString());
-      log.trace(func, 'now:', new Date(Date.now()).toLocaleTimeString());
-      throw new Error(errors.TOKEN_EXPIRED);
-    }
-  }//validateToken
 
   async validateAuthUser(data: authUser): Promise<any> {
     const func = await this.getFunc('validateAuthUser');

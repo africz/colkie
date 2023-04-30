@@ -32,16 +32,16 @@
         "cleverLinks": true,
         "monospaceLinks": false,
         "search": true,
-        "systemName": "Colkie-NODE",
-        "systemSummary": "Colkie Node module",
+        "systemName": "Colkie-Api",
+        "systemSummary": "Colkie Api",
         "systemLogo": "",
         "systemColor": "",
-        "copyright": "2021 Telecom2 Ltd."
+        "copyright": "Attila Fricz."
     },
     "opts": {
         "template": "node_modules/jsdoc/templates/default",
         "encoding": "utf8",
-        "destination": "./jsdoc/",
+        "destination": "public/jsdoc/",
         "recurse": true,
         "verbose": true
     }
