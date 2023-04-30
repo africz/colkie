@@ -1,12 +1,13 @@
 import { Client, expect } from '@loopback/testlab';
 import { ColkieApplication } from '../../application';
-import { getAuthToken, getNextTestValue, setupApplication } from './test-helper';
+import { getAuthToken, getNextTestValue, getRoomUser, getUserById, setupApplication } from './test-helper';
 import * as constants from '../../constants';
 import * as errors from '../../errors';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
 import config from '../../config.json';
 import { addUser, authUser, createUser, sendMessage } from '../../interfaces';
+import { use } from 'should';
 
 
 describe('RoomController', () => {
@@ -32,32 +33,6 @@ describe('RoomController', () => {
         await app.stop();
     });
 
-    xdescribe('/room/sendMessage', () => {
-        it('success', async () => {
-            const func = await getFunc('success', fileName);
-            const authToken = await getAuthToken(authData, client);
-            log.debug(func, 'authToken:', authToken);
-
-            const data: sendMessage = {
-                room: 1,
-                username: username,
-                message: "test message",
-                token: authToken
-            };
-            const postRes = await client
-                .post(constants.A_SEND_MESSAGE)
-                .send(data)
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200);
-
-            log.trace(func, 'postRes:', postRes);
-            log.trace(func, 'postRes.body:', postRes.body);
-            const result = postRes.body;
-            log.debug(func, 'result:', result);
-            expect(result.message).is.equal(constants.RESULT_SUCCESS);
-        })
-    });
     describe('/room/addUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
@@ -179,4 +154,35 @@ describe('RoomController', () => {
         })
 
     });
+    describe('/room/sendMessage', () => {
+        it('success', async () => {
+            const func = await getFunc('success', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: sendMessage = {
+                room: 1,
+                username: user.username,
+                message: "test message",
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_SEND_MESSAGE)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(constants.RESULT_SUCCESS);
+        })
+    });
+
 });

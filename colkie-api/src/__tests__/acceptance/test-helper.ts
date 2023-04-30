@@ -6,17 +6,19 @@ import {
 } from '@loopback/testlab';
 
 import { UserRepository } from '../../repositories/user.repository';
+import { RoomUserRepository } from '../../repositories/roomuser.repository';
 import { ColkieDataSource } from '../../datasources';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
 import { getNextTestValue, authUser } from '../../interfaces';
 import * as constants from '../../constants';
+import * as errors from '../../errors';
+import { RoomUser, User } from '../../models';
 
 
 
 /**
  * Setup a test application
- * @date 4/30/2023 - 4:58:04 PM
  *
  * @export
  * @async
@@ -65,8 +67,6 @@ export interface AppWithClient {
 /**
  * Email and username are unique to create succesful a new one need pass a unique name.
  * This function generate a new username and email at every request.
- * @date 4/30/2023 - 4:58:04 PM
- *
  * @export
  * @async
  * @param {getNextTestValue} data
@@ -76,7 +76,6 @@ export async function getNextTestValue(data: getNextTestValue): Promise<getNextT
   const func = await getFunc('getNextTestValue', 'test-helper.ts');
   const { username, email } = data;
   log.debug(func, 'data:', data);
-  // like: 'africz#%'
   const filter = {
     where: {
       username: {
@@ -121,6 +120,12 @@ export async function getNextTestValue(data: getNextTestValue): Promise<getNextT
   return retVal;
 }//getNextTestValue
 
+/**
+ * Execute authentication
+ * @param {any} data:authUser
+ * @param {any} client:Client
+ * @returns {any}
+ */
 export async function getAuthToken(data: authUser, client: Client): Promise<string> {
   const func = await getFunc('getAuthToken', 'test-helper.ts');
   const authRes = await client
@@ -135,3 +140,56 @@ export async function getAuthToken(data: authUser, client: Client): Promise<stri
   log.debug(func, 'authToken:', authToken);
   return authToken;
 }
+
+/**
+ * get any valid user from any room for test sendMessage
+ * @returns {RoomUser}
+ */
+export async function getRoomUser(): Promise<RoomUser> {
+  const func = await getFunc('getRoomUser', 'test-helper.ts');
+  const roomUserRepository = new RoomUserRepository(new ColkieDataSource);
+
+  const filter = {
+    order: ['id DESC'],
+    limit: 1
+  };
+  const retVal: any = await roomUserRepository.find(filter)
+    .catch(error => {
+      log.error(func, 'error(findOne):', error);
+      throw new Error(error);
+    });
+  if (!retVal) {
+    throw new Error(errors.ROOM_USER_NOT_EXISTS);
+  }
+  log.debug(func, 'retVal:', retVal);
+  return retVal[0];
+}//getRoomUser
+
+/**
+ * get any valid user from any room for test sendMessage
+ * @returns {RoomUser}
+ */
+export async function getUserById(id: number): Promise<User> {
+  const func = await getFunc('getUserById', 'test-helper.ts');
+  const userRepository = new UserRepository(new ColkieDataSource);
+  log.trace(func, 'id:', id);
+  const filter = {
+    where: {
+      id: {
+        eq: id
+      }
+    }
+  }
+  log.trace(func, 'filter:', filter);
+
+  const retVal: any = await userRepository.findOne(filter)
+    .catch(error => {
+      log.error(func, 'error(findOne):', error);
+      throw new Error(error);
+    });
+  if (!retVal) {
+    throw new Error(errors.USER_NOT_EXISTS);
+  }
+  log.debug(func, 'retVal:', retVal);
+  return retVal;
+}//getUserById

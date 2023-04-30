@@ -103,12 +103,22 @@ export class RoomController extends ColkieController {
       await validateToken({ username: username, token: token });
       await this.validateSendMessage(data);
 
-
-
+      const payload: any = new Room();
+      payload.room = room;
+      payload.username = username;
+      payload.message = message;
+      log.trace(func, 'payload:', payload);
+      await this.roomRepository
+        .create(payload)
+        .catch(error => {
+          log.trace(func, 'error(create):', error);
+          throw new Error(error);
+        });
+        
       this.response.status(200).send({
         message: constants.RESULT_SUCCESS
       });
-      log.info(func, constants.RESULT_SUCCESS, room);
+      log.info(func, constants.RESULT_SUCCESS);
       return this.response;
     } catch (error) {
       this.response.status(400).send({
@@ -280,7 +290,7 @@ export class RoomController extends ColkieController {
  * @returns {Promise<void>}
  */
   async validateMessage(data: sendMessage): Promise<void> {
-    const func = await this.getFunc('validateRoomUser');
+    const func = await this.getFunc('validateMessage');
     log.trace(func, 'data:', data);
   }//validateMessage
 

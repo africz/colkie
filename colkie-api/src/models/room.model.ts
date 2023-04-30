@@ -25,7 +25,7 @@ export class Room extends Entity {
   @property({
     type: 'string',
   })
-  user: string;
+  username: string;
 
   @property({
     type: 'string',
