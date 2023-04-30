@@ -32,7 +32,10 @@ export async function validateEmail(email: string): Promise<void> {
     const func = await getFunc('validateEmail', 'validate.ts');
     log.trace(func, 'email', email);
     const result = await validate(email);
-    log.trace(func, 'result', result);
-
-
+    if (!result.validators.regex?.valid)
+    {
+        log.error(func, 'error:', errors.EMAIL_IS_INVALID);
+        throw new Error(errors.EMAIL_IS_INVALID);
+    }
+    log.warn(func, 'result', result);
 }

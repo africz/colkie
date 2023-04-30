@@ -87,6 +87,7 @@ export class UserController extends ColkieController {
           properties: {
             username: { type: 'string' },
             password: { type: 'string' },
+            nextusername: { type: 'string' },
             email: { type: 'string' },
             firstname: { type: 'string' },
             lastname: { type: 'string' },
@@ -99,8 +100,10 @@ export class UserController extends ColkieController {
     const func = await this.getFunc('createUser');
     log.info(func, 'data:', data);
     try {
-      const { username, password, email, firstname, lastname, token } = data;
-      await this.validateToken({ username: username, token: token });
+      const {authname,username, password, email, firstname, lastname, token } = data;
+      //token is validated here due this is the most important validation, not hidden
+      //in validateCreateUser to make it visible as possible.
+      await this.validateToken({ username: authname, token: token });
       await this.validateCreateUser(data);
       const filter = {
         where: {
@@ -311,7 +314,7 @@ export class UserController extends ColkieController {
     const func = await this.getFunc('validateAuthUser');
     log.trace(func, 'data:', data);
     const { username, password } = data;
-    await validateString(username, { length: 20, empty: false, null: false, symbol: false });
+    await validateString(username, { length: 20, empty: false, null: false});
     //not finished the validation process to check symbols, numbers etc I would like to save some time
     await validateString(password, { length: 100, empty: false, null: false, symbol: true });
   }//validateAuthUser
@@ -319,9 +322,13 @@ export class UserController extends ColkieController {
   async validateCreateUser(data: createUser): Promise<any> {
     const func = await this.getFunc('validateCreateUser');
     log.trace(func, 'data:', data);
-    const { username, password, email, firstname, lastname, token } = data;
-    validateEmail(email);
-
+    const { username, password, email, firstname, lastname } = data;
+    await validateString(username, { length: 20, empty: false, null: false });
+    await validateString(password, { length: 100, empty: false, null: false, symbol: true,number:true });
+    await validateEmail(email);
+    await validateString(firstname, { length: 20, empty: false, null: false });
+    await validateString(lastname, { length: 20, empty: false, null: false });
+    //token is validated first in the main function
   }
 
 

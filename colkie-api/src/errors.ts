@@ -14,4 +14,5 @@ export const TOKEN_EXPIRED = 'Expired token!';
 export const STRING_LENGTH_LONG = 'String length is longer than expected!';
 export const STRING_EMPTY_NOT_ALLOWED = 'Empty string not allowed!';
 export const STRING_NULL_NOT_ALLOWED = 'Null string not allowed!';
+export const EMAIL_IS_INVALID = 'Invalid email!';
 

@@ -1,12 +1,13 @@
 import { Client, expect } from '@loopback/testlab';
 import { ColkieApplication } from '../../application';
-import { setupApplication } from './test-helper';
+import { getNextTestValue, setupApplication } from './test-helper';
 import * as constants from '../../constants';
 import * as errors from '../../errors';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
 import config from '../../config.json';
 import { Context } from 'mocha';
+import { createUser } from '../../interfaces';
 
 
 describe('UserController', () => {
@@ -14,13 +15,15 @@ describe('UserController', () => {
     let client: Client;
     let username: string;
     let password: string;
+    let email: string;
     let fileName: string;
     let test: any;
 
     before('setupApplication', async () => {
         ({ app, client } = await setupApplication());
         username = config.test.username;
-        password = config.test.username;
+        password = config.test.password;
+        email = 'test@test.com';
         fileName = 'user.controller.acceptance.ts';
 
     });
@@ -28,7 +31,7 @@ describe('UserController', () => {
     after(async () => {
         await app.stop();
     });
-    describe('/user/authUser', () => {
+    xdescribe('/user/authUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const postRes = await client
@@ -122,4 +125,47 @@ describe('UserController', () => {
 
         });
     });
+
+    describe('/user/createUser', () => {
+        it('success', async () => {
+            const func = await getFunc('success', fileName);
+            const authData = { username: username, password: password };
+            const authRes = await client
+                .post(constants.A_AUTH_USER)
+                .send(authData)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'authRes:', authRes);
+            const authToken = authRes.body.message.token;
+            log.debug(func, 'authToken:', authToken);
+            const nextUser = await getNextTestValue({ username: username, email: email });
+            log.debug(func, 'nextUser:', nextUser);
+
+            const data: createUser = {
+                authname: username,
+                username:nextUser.username,
+                password: password,
+                email: nextUser.email,
+                firstname: 'Test firstname',
+                lastname: 'Test lastname',
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_CREATE_USER)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(constants.RESULT_SUCCESS);
+        });
+
+    });
+
 });

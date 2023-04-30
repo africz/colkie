@@ -7,6 +7,7 @@
 
 
 export interface createUser {
+  authname: string;
   username: string;
   password: string;
   email: string;
@@ -38,3 +39,8 @@ export interface validateString {
   char?: boolean;
 }
 
+export interface getNextTestValue
+{
+  username:string;
+  email:string;
+}
