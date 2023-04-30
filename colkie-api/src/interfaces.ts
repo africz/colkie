@@ -51,7 +51,8 @@ export interface sendMessage {
   token: string;
 }
 export interface addUser {
-  room: number;
+  authname: string;
   username: string;
+  room: number;
   token: string;
 }

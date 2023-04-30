@@ -166,6 +166,7 @@ export class RoomController extends ColkieController {
           type: 'object',
           title: 'addUser',
           properties: {
+            authname: { type: 'string' },
             room: { type: 'number' },
             username: { type: 'string' },
             token: { type: 'string' }
@@ -177,8 +178,8 @@ export class RoomController extends ColkieController {
     const func = await this.getFunc('addUser');
     log.info(func, 'data:', data);
     try {
-      const { room, username, token } = data;
-      await validateToken({ username: username, token: token });
+      const { authname,username,room, token } = data;
+      await validateToken({ username: authname, token: token });
       await this.validateAddUser(data);
       const user = await this.getUser(username);
 
