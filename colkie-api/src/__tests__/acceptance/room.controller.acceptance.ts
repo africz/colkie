@@ -183,6 +183,64 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.equal(constants.RESULT_SUCCESS);
         })
+
+        it('username invalid', async () => {
+            const func = await getFunc('success', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: sendMessage = {
+                room: 1,
+                username: "xxx",
+                message: "test message",
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_SEND_MESSAGE)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.USER_NOT_EXISTS);
+        })
+        it('room invalid', async () => {
+            const func = await getFunc('success', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: sendMessage = {
+                room: 9000,
+                username: user.username,
+                message: "test message",
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_SEND_MESSAGE)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.ROOM_USER_NOT_EXISTS);
+        })
+
     });
 
 });
