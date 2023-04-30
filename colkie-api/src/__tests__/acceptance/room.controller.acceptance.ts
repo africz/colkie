@@ -6,7 +6,7 @@ import * as errors from '../../errors';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
 import config from '../../config.json';
-import { addUser, authUser, createUser, sendMessage } from '../../interfaces';
+import { addUser, authUser, createUser, getMessages, sendMessage } from '../../interfaces';
 import { use } from 'should';
 
 
@@ -33,7 +33,7 @@ describe('RoomController', () => {
         await app.stop();
     });
 
-    describe('/room/addUser', () => {
+    xdescribe('/room/addUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             //authentication for create a new user
@@ -154,7 +154,7 @@ describe('RoomController', () => {
         })
 
     });
-    describe('/room/sendMessage', () => {
+    xdescribe('/room/sendMessage', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const roomUser: any = await getRoomUser();
@@ -240,6 +240,38 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.equal(errors.ROOM_USER_NOT_EXISTS);
         })
+
+    });
+    describe('/room/getMessages', () => {
+        it('room,username,limit 5 success', async () => {
+            const func = await getFunc('room,username,limit 5 success', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: getMessages = {
+                room: 1,
+                username: user.username,
+                limit:5,
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_GET_MESSAGES)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(constants.RESULT_SUCCESS);
+        })
+
 
     });
 

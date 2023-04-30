@@ -18,4 +18,5 @@ export const EMAIL_IS_INVALID = 'Invalid email!';
 export const ROOM_IS_INVALID = 'Room is invalid!';
 export const USER_EXISTS_IN_ROOM = 'User already exists in this room!';
 export const ROOM_USER_NOT_EXISTS = 'User is not exists in this room!';
+export const LIMIT_IS_INVALID = 'Limit is invalid!';
 

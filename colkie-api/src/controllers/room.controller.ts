@@ -12,6 +12,7 @@ import * as errors from '../errors';
 import { log } from '../helpers/logger';
 import {
   addUser,
+  getMessages,
   sendMessage,
 } from '../interfaces';
 import { ColkieController, ResponseError, ResponseSuccess } from './colkie.controller';
@@ -130,6 +131,82 @@ export class RoomController extends ColkieController {
   }//sendMessage
 
 
+    /**
+   * Get messages
+   * @apicall URL - /rooms/getMessages
+   * @param  {requestBody} requestBody
+   * @param  {createRoom} data
+   * @returns {Promise<any>}
+   * @example
+   *
+   * Request Data
+   * ------------
+   * {
+   *    "room":"testroom",
+   *    "username":"testname",
+   *    "limit":100, 
+   *    "token":"auth token",
+   * }
+   *
+   * Response Success
+   * ----------------
+   * {
+   *    "status":200,
+   *    "message": "Success"
+   * }
+   *
+   * Response Error
+   * --------------
+   * {
+   *    "status": 400,
+   *    "message": <Error reason>
+   * }
+   */
+
+    @post(constants.A_GET_MESSAGES)
+    @response(200, ResponseSuccess)
+    @response(400, ResponseError)
+    async getMessages(@requestBody({
+      description: 'getMessages',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            title: 'getMessages',
+            properties: {
+              room: { type: 'number' },
+              username: { type: 'string' },
+              limit: { type: 'number' },
+              token: { type: 'string' }
+            },
+          },
+        },
+      },
+    }) data: getMessages): Promise<Response> {
+      const func = await this.getFunc('getMessages');
+      log.info(func, 'data:', data);
+      try {
+        const { room, username, limit, token } = data;
+        await validateToken({ username: username, token: token });
+        await this.validateGetMessages(data);
+  
+
+        
+        this.response.status(200).send({
+          message: constants.RESULT_SUCCESS
+        });
+        log.info(func, constants.RESULT_SUCCESS);
+        return this.response;
+      } catch (error) {
+        this.response.status(400).send({
+          message: error.message,
+        });
+        log.error(func, 'error(return):', error.stack);
+        return this.response;
+      }
+    }//getMessages
+  
+  
   /**
    * Send a message to the room
    * @apicall URL - /rooms/addUser
@@ -254,6 +331,25 @@ export class RoomController extends ColkieController {
     await this.validateMessage(data);
   }//validateSendMessage
 
+
+  /**
+   * @param {any} data:getMessages
+   * @returns {any}
+   */
+    async validateGetMessages(data: getMessages): Promise<any> {
+      const func = await this.getFunc('validateGetMessages');
+      log.trace(func, 'data:', data);
+      //username is validated by token already
+      const { room, limit } = data;
+      await validateRoom(room);
+      if (limit <0 )
+      {
+        throw new Error(errors.LIMIT_IS_INVALID);
+      }
+
+    }//validateGetMessages
+  
+
   /**
    * @param {sendMessage} data:sendMessage
    * @returns {Promise<void>}
@@ -292,6 +388,7 @@ export class RoomController extends ColkieController {
   async validateMessage(data: sendMessage): Promise<void> {
     const func = await this.getFunc('validateMessage');
     log.trace(func, 'data:', data);
+    //TODO check vulgar expressions, etc.
   }//validateMessage
 
 

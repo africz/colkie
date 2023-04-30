@@ -50,6 +50,13 @@ export interface sendMessage {
   message: string;
   token: string;
 }
+export interface getMessages {
+  room: number;
+  username: string;
+  limit: number;
+  token: string;
+}
+
 export interface addUser {
   username: string;
   room: number;
