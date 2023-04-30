@@ -32,7 +32,33 @@ describe('RoomController', () => {
         await app.stop();
     });
 
-    describe('/user/sendMessage', () => {
+    describe('/room/sendMessage', () => {
+        it('success', async () => {
+            const func = await getFunc('success', fileName);
+            const authToken = await getAuthToken(authData, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: sendMessage = {
+                room: 1,
+                username: username,
+                message: "xx",
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_SEND_MESSAGE)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(constants.RESULT_SUCCESS);
+        })
+    });
+    describe('/room/addUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const authToken = await getAuthToken(authData, client);

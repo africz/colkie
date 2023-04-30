@@ -1,8 +1,8 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({
-  name: 'user',
-  settings: {strict: true, validateUpsert: true, plural: 'users', idInjection: true}
+  name: 'room',
+  settings: {strict: true, validateUpsert: true, plural: 'rooms', idInjection: true}
 })
 export class Room extends Entity {
   constructor(data?: Partial<Room>) {

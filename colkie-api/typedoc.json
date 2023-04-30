@@ -12,6 +12,7 @@
     "./src/helpers/getdatabase.ts",
     "./src/helpers/getfunc.ts",
     "./src/helpers/logger.ts",
+    "./src/helpers/validate.ts",
     "./src/models/index.ts",
     "./src/repositories/index.ts"
   ],

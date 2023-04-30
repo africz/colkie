@@ -11,6 +11,7 @@ import * as constants from '../constants';
 import * as errors from '../errors';
 import { log } from '../helpers/logger';
 import {
+  addUser,
   sendMessage,
 } from '../interfaces';
 import { ColkieController, ResponseError, ResponseSuccess } from './colkie.controller';
@@ -72,7 +73,7 @@ export class RoomController extends ColkieController {
   @post(constants.A_SEND_MESSAGE)
   @response(200, ResponseSuccess)
   @response(400, ResponseError)
-  async createRoom(@requestBody({
+  async sendMessage(@requestBody({
     description: 'sendMessage',
     content: {
       'application/json': {
@@ -109,6 +110,78 @@ export class RoomController extends ColkieController {
     }
   }//sendMessage
 
+
+  /**
+   * Send a message to the room
+   * @apicall URL - /rooms/addUser
+   * @param  {requestBody} requestBody
+   * @param  {createRoom} data
+   * @returns {Promise<any>}
+   * @example
+   *
+   * Request Data
+   * ------------
+   * {
+   *    "room":"testroom",
+   *    "username":"testname",
+   *    "token":"auth token",
+   * }
+   *
+   * Response Success
+   * ----------------
+   * {
+   *    "status":200,
+   *    "message": "Success"
+   * }
+   *
+   * Response Error
+   * --------------
+   * {
+   *    "status": 400,
+   *    "message": <Error reason>
+   * }
+   */
+
+  @post(constants.A_ADD_USER)
+  @response(200, ResponseSuccess)
+  @response(400, ResponseError)
+  async addUser(@requestBody({
+    description: 'addUser',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          title: 'addUser',
+          properties: {
+            room: { type: 'number' },
+            username: { type: 'string' },
+            token: { type: 'string' }
+          },
+        },
+      },
+    },
+  }) data: addUser): Promise<Response> {
+    const func = await this.getFunc('addUser');
+    log.info(func, 'data:', data);
+    try {
+      const { room, username, token } = data;
+      await validateToken({ username: username, token: token });
+      await this.validateAddUser(data);
+      this.response.status(200).send({
+        message: constants.RESULT_SUCCESS
+      });
+      log.info(func, constants.RESULT_SUCCESS, room);
+      return this.response;
+    } catch (error) {
+      this.response.status(400).send({
+        message: error.message,
+      });
+      log.error(func, 'error(return):', error.stack);
+      return this.response;
+    }
+  }//addUser
+
+
   async validateMessage(data: sendMessage): Promise<any> {
     const func = await this.getFunc('validateCreateUser');
     log.trace(func, 'data:', data);
@@ -117,4 +190,13 @@ export class RoomController extends ColkieController {
     //validate room valid room id for current user
     //validate message vulgar expressions for an example
   }
+
+  async validateAddUser(data: addUser): Promise<any> {
+    const func = await this.getFunc('validateAddUser');
+    log.trace(func, 'data:', data);
+    const { room, username } = data;
+    await validateString(username, { length: 20, empty: false, null: false });
+    //validate room valid room id for current user
+  }
+
 } //RoomController
