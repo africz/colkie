@@ -269,7 +269,7 @@ describe('RoomController', () => {
             log.trace(func, 'postRes.body:', postRes.body);
             const result = postRes.body;
             log.debug(func, 'result:', result);
-            expect(result.message).is.equal(constants.RESULT_SUCCESS);
+            expect(result.message).is.Array;
         })
 
 
