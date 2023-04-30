@@ -3,14 +3,14 @@ import {
   createRestAppClient,
   givenHttpServerConfig,
   Client,
-  inject,
 } from '@loopback/testlab';
 
 import { UserRepository } from '../../repositories/user.repository';
 import { ColkieDataSource } from '../../datasources';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
-import { getNextTestValue } from '../../interfaces';
+import { getNextTestValue, authUser } from '../../interfaces';
+import * as constants from '../../constants';
 
 
 
@@ -95,22 +95,43 @@ export async function getNextTestValue(data: getNextTestValue): Promise<getNextT
   log.debug(func, 'user:', user);
   let nextUserName = username;
   let nextEmail = email;
+  //need to lead with zero to get proper revers order in (find)
+  //after 10 with padding will not gona works. 
+  let nextNumber = "";
   if (user.length) {
     log.debug(func, 'user.username:', user[0].username);
     if (user[0].username.indexOf('#') > 0) {
       const tmp = user[0].username.split("#");
       log.debug(func, 'tmp:', tmp);
-      nextUserName = `${tmp[0]}#${(Number(tmp[1]) + 1)}`;
-      nextEmail = `${Number(tmp[1])+ 1}#${email}`;
+      nextNumber = (Number(tmp[1]) + 1).toString().padStart(4, '0');
+      nextUserName = `${tmp[0]}#${nextNumber}`;
+      nextEmail = `${nextNumber}#${email}`;
     } else {
-      nextUserName = `${username}#1`;
-      nextEmail = `1#${email}`;
+      nextNumber = "1".padStart(4, '0');
+      nextUserName = `${username}#${nextNumber}`;
+      nextEmail = `${nextNumber}#${email}`;
     }
   } else {
-    nextUserName = `${username}#1`;
-    nextEmail = `1#${email}`;
+    nextNumber = "1".padStart(4, '0');
+    nextUserName = `${username}#${nextNumber}`;
+    nextEmail = `${nextNumber}#${email}`;
   }
   const retVal = { username: nextUserName, email: nextEmail };
   log.debug(func, 'retVal:', retVal);
   return retVal;
 }//getNextTestValue
+
+export async function getAuthToken(data: authUser, client: Client): Promise<string> {
+  const func = await getFunc('getAuthToken', 'test-helper.ts');
+  const authRes = await client
+    .post(constants.A_AUTH_USER)
+    .send(data)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200);
+
+  log.trace(func, 'authRes:', authRes);
+  const authToken = authRes.body.message.token;
+  log.debug(func, 'authToken:', authToken);
+  return authToken;
+}

@@ -1,13 +1,12 @@
 import { Client, expect } from '@loopback/testlab';
 import { ColkieApplication } from '../../application';
-import { getNextTestValue, setupApplication } from './test-helper';
+import { getAuthToken, getNextTestValue, setupApplication } from './test-helper';
 import * as constants from '../../constants';
 import * as errors from '../../errors';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
 import config from '../../config.json';
-import { Context } from 'mocha';
-import { createUser } from '../../interfaces';
+import { authUser, createUser } from '../../interfaces';
 
 
 describe('UserController', () => {
@@ -17,7 +16,8 @@ describe('UserController', () => {
     let password: string;
     let email: string;
     let fileName: string;
-    let test: any;
+    let authData: authUser;
+
 
     before('setupApplication', async () => {
         ({ app, client } = await setupApplication());
@@ -25,13 +25,13 @@ describe('UserController', () => {
         password = config.test.password;
         email = 'test@test.com';
         fileName = 'user.controller.acceptance.ts';
-
+        authData = { username: username, password: password };
     });
 
     after(async () => {
         await app.stop();
     });
-    xdescribe('/user/authUser', () => {
+    describe('/user/authUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const postRes = await client
@@ -129,23 +129,14 @@ describe('UserController', () => {
     describe('/user/createUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
-            const authData = { username: username, password: password };
-            const authRes = await client
-                .post(constants.A_AUTH_USER)
-                .send(authData)
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200);
-
-            log.trace(func, 'authRes:', authRes);
-            const authToken = authRes.body.message.token;
+            const authToken = await getAuthToken(authData, client);
             log.debug(func, 'authToken:', authToken);
             const nextUser = await getNextTestValue({ username: username, email: email });
             log.debug(func, 'nextUser:', nextUser);
 
             const data: createUser = {
                 authname: username,
-                username:nextUser.username,
+                username: nextUser.username,
                 password: password,
                 email: nextUser.email,
                 firstname: 'Test firstname',
@@ -164,8 +155,64 @@ describe('UserController', () => {
             const result = postRes.body;
             log.debug(func, 'result:', result);
             expect(result.message).is.equal(constants.RESULT_SUCCESS);
+        })
+        it('username long', async () => {
+            const func = await getFunc('success', fileName);
+            const authToken = await getAuthToken(authData, client);
+            log.debug(func, 'authToken:', authToken);
+            const nextUser = await getNextTestValue({ username: username, email: email });
+            log.debug(func, 'nextUser:', nextUser);
+
+            const data: createUser = {
+                authname: username,
+                username: `${nextUser.username}123456789012345678901`,
+                password: password,
+                email: nextUser.email,
+                firstname: 'Test firstname',
+                lastname: 'Test lastname',
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_CREATE_USER)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.STRING_LENGTH_LONG);
         });
+        it('username empty', async () => {
+            const func = await getFunc('success', fileName);
+            const authToken = await getAuthToken(authData, client);
+            log.debug(func, 'authToken:', authToken);
+            const nextUser = await getNextTestValue({ username: username, email: email });
+            log.debug(func, 'nextUser:', nextUser);
 
+            const data: createUser = {
+                authname: username,
+                username: "",
+                password: password,
+                email: nextUser.email,
+                firstname: 'Test firstname',
+                lastname: 'Test lastname',
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_CREATE_USER)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.STRING_EMPTY_NOT_ALLOWED);
+        });
     });
-
 });
