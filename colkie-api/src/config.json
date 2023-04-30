@@ -25,7 +25,7 @@
         "password": "colkie",
         "name": "db",
         "user": "colkie",
-        "connector": "loopback-connector-mysql2"
+        "connector": "loopback-connector-mysql"
     },
     "log": {
         "basePath": "/",
