@@ -3,13 +3,13 @@
  * @param  {string} fileName
  * @param  {string|null} caller?
  */
-export function getFunc(
+export async function getFunc(
   func: string,
   fileName: string,
   caller?: string | null,
   userName?: string | null,
   mod?: string | null,
-): string {
+): Promise<string> {
   if (!caller) {
     caller = '';
   }

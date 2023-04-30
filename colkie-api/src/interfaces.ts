@@ -22,10 +22,19 @@ export interface authUser {
 export interface token {
   username: string;
   email: string;
-  expireTime:number;
+  expireTime: number;
 }
 export interface validateToken {
   username: string;
-  token:string;
+  token: string;
+}
+
+export interface validateString {
+  length: number;
+  empty?: boolean;
+  null?: boolean;
+  symbol?: boolean;
+  number?: boolean;
+  char?: boolean;
 }
 

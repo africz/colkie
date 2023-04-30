@@ -6,7 +6,7 @@
  */
 
 import { repository } from '@loopback/repository';
-import { post, requestBody, response} from '@loopback/rest';
+import { post, requestBody, response } from '@loopback/rest';
 import * as constants from '../constants';
 import * as errors from '../errors';
 import { log } from '../helpers/logger';
@@ -22,6 +22,7 @@ import { inject } from '@loopback/core';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from '../config.json';
+import { validateEmail, validateString } from '../helpers/validate';
 
 /**
  * This controller handle all user related functions such as
@@ -100,7 +101,7 @@ export class UserController extends ColkieController {
     try {
       const { username, password, email, firstname, lastname, token } = data;
       await this.validateToken({ username: username, token: token });
-
+      await this.validateCreateUser(data);
       const filter = {
         where: {
           and: [
@@ -209,6 +210,8 @@ export class UserController extends ColkieController {
     log.info(func, 'data:', data);
     try {
       const { username, password } = data;
+      await this.validateAuthUser(data);
+
       const filter = {
         where: {
           and: [
@@ -277,7 +280,7 @@ export class UserController extends ColkieController {
     const func = await this.getFunc('generateToken');
     log.trace(func, 'data:', data);
     //expire time in minutes
-    data.expireTime = Date.now() + config.tokenExpire*1000*60;
+    data.expireTime = Date.now() + config.tokenExpire * 1000 * 60;
     log.trace(func, 'now:', new Date(Date.now()).toLocaleTimeString());
     log.trace(func, 'token expireTime:', new Date(data.expireTime).toLocaleTimeString());
     const retVal = jwt.sign(data, config.tokenSalt);
@@ -303,5 +306,24 @@ export class UserController extends ColkieController {
       throw new Error(errors.TOKEN_EXPIRED);
     }
   }//validateToken
+
+  async validateAuthUser(data: authUser): Promise<any> {
+    const func = await this.getFunc('validateAuthUser');
+    log.trace(func, 'data:', data);
+    const { username, password } = data;
+    await validateString(username, { length: 20, empty: false, null: false, symbol: false });
+    //not finished the validation process to check symbols, numbers etc I would like to save some time
+    await validateString(password, { length: 100, empty: false, null: false, symbol: true });
+  }//validateAuthUser
+
+  async validateCreateUser(data: createUser): Promise<any> {
+    const func = await this.getFunc('validateCreateUser');
+    log.trace(func, 'data:', data);
+    const { username, password, email, firstname, lastname, token } = data;
+    validateEmail(email);
+
+  }
+
+
 
 } //UserController

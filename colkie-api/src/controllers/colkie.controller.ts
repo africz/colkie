@@ -84,7 +84,7 @@ export class ColkieController {
   ): Promise<string> {
     if (!mod) mod = '';
     const userName=''; //not using here yet 
-    return getFunc(func, this.fileName, caller, userName, mod);
+    return await getFunc(func, this.fileName, caller, userName, mod);
   } //getFunc
 
 

@@ -3,6 +3,10 @@
     "rootFolder":"/var/www/html",
     "tokenSalt":"$2b$10$jNXipXZDymiJwAou0.ffqek64XAat1Fq2FHX6x3IC5OhCNtYjP4z6",
     "tokenExpire":30,
+    "test":{
+        "username":"africz",
+        "password":"africz"
+    },
     "rest": {
         "ssl_key": "/var/www/html/certs/colkie-key.pem",
         "ssl_cert": "/var/www/html/certs/colkie.pem",
