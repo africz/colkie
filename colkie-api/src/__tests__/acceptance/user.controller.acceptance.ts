@@ -31,7 +31,7 @@ describe('UserController', () => {
     after(async () => {
         await app.stop();
     });
-    xdescribe('/user/authUser', () => {
+    describe('/user/authUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const postRes = await client
@@ -126,7 +126,7 @@ describe('UserController', () => {
         });
     });
 
-    xdescribe('/user/createUser', () => {
+    describe('/user/createUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const authToken = await getAuthToken(authData, client);

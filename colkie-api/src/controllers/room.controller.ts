@@ -87,7 +87,7 @@ export class RoomController extends ColkieController {
           type: 'object',
           title: 'sendMessage',
           properties: {
-            room: { type: 'string' },
+            room: { type: 'number' },
             username: { type: 'string' },
             message: { type: 'string' },
             token: { type: 'string' }
@@ -101,7 +101,10 @@ export class RoomController extends ColkieController {
     try {
       const { room, username, message, token } = data;
       await validateToken({ username: username, token: token });
-      await this.validateMessage(data);
+      await this.validateSendMessage(data);
+
+
+
       this.response.status(200).send({
         message: constants.RESULT_SUCCESS
       });
@@ -178,8 +181,8 @@ export class RoomController extends ColkieController {
     const func = await this.getFunc('addUser');
     log.info(func, 'data:', data);
     try {
-      const { authname,username,room, token } = data;
-      await validateToken({ username: authname, token: token });
+      const { username, room, token } = data;
+      await validateToken({ username: username, token: token });
       await this.validateAddUser(data);
       const user = await this.getUser(username);
 
@@ -233,14 +236,54 @@ export class RoomController extends ColkieController {
    * @param {any} data:sendMessage
    * @returns {any}
    */
-  async validateMessage(data: sendMessage): Promise<any> {
-    const func = await this.getFunc('validateCreateUser');
+  async validateSendMessage(data: sendMessage): Promise<any> {
+    const func = await this.getFunc('validateSendMessage');
     log.trace(func, 'data:', data);
     const { room, username, message } = data;
-    await validateString(username, { length: 20, empty: false, null: false });
-    //validate room valid room id for current user
-    //validate message vulgar expressions for an example
-  }
+    await this.validateRoomUser(data);
+    await this.validateMessage(data);
+  }//validateSendMessage
+
+  /**
+   * @param {sendMessage} data:sendMessage
+   * @returns {Promise<void>}
+   */
+  async validateRoomUser(data: sendMessage): Promise<void> {
+    const func = await this.getFunc('validateRoomUser');
+    log.trace(func, 'data:', data);
+    const { room, username } = data;
+    const user = await this.getUser(username);
+
+    let filter = {
+      where: {
+        and: [
+          { roomid: room },
+          { userid: user.id },
+        ],
+      },
+    };
+    log.trace(func, 'filter:', filter);
+    const roomUser: any = await this.roomUserRepository
+      .findOne(filter)
+      .catch(error => {
+        log.error(func, 'error(findOne):', error);
+        throw new Error(error);
+      });
+    if (!roomUser) {
+      log.error(func, errors.ROOM_USER_NOT_EXISTS);
+      throw new Error(errors.ROOM_USER_NOT_EXISTS);
+    }
+  }//validateRoomUser
+
+  /**
+ * @param {sendMessage} data:sendMessage
+ * @returns {Promise<void>}
+ */
+  async validateMessage(data: sendMessage): Promise<void> {
+    const func = await this.getFunc('validateRoomUser');
+    log.trace(func, 'data:', data);
+  }//validateMessage
+
 
   /**
    * @param {addUser} data:addUser
@@ -275,7 +318,7 @@ export class RoomController extends ColkieController {
         throw new Error(error);
       });
     if (!user) {
-      log.error(func, errors.USER_NOT_EXISTS, user);
+      log.error(func, errors.USER_NOT_EXISTS);
       throw new Error(errors.USER_NOT_EXISTS);
     }
     return user;

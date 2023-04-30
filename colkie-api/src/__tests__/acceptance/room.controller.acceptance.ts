@@ -41,7 +41,7 @@ describe('RoomController', () => {
             const data: sendMessage = {
                 room: 1,
                 username: username,
-                message: "xx",
+                message: "test message",
                 token: authToken
             };
             const postRes = await client
@@ -61,7 +61,8 @@ describe('RoomController', () => {
     describe('/room/addUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
-            const authToken = await getAuthToken(authData, client);
+            //authentication for create a new user
+            let authToken = await getAuthToken(authData, client);
             log.debug(func, 'authToken:', authToken);
             const nextUser = await getNextTestValue({ username: username, email: email });
             log.debug(func, 'nextUser:', nextUser);
@@ -85,10 +86,11 @@ describe('RoomController', () => {
             log.debug(func, 'userResult:', userResult);
 
             expect(userResult.body.message).is.equal(constants.RESULT_SUCCESS);
-
+            //authentication with newly created user
+            authToken = await getAuthToken({ username: nextUser.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
 
             const data: addUser = {
-                authname: username,
                 username: nextUser.username,
                 room: 1,
                 token: authToken
@@ -113,7 +115,6 @@ describe('RoomController', () => {
 
             const data: addUser = {
                 room: 9000,
-                authname: username,
                 username: username,
                 token: authToken
             };
@@ -137,7 +138,6 @@ describe('RoomController', () => {
 
             const data: addUser = {
                 room: 1,
-                authname: username,
                 username: "xx",
                 token: authToken
             };
@@ -161,7 +161,6 @@ describe('RoomController', () => {
 
             const data: addUser = {
                 room: 1,
-                authname: username,
                 username: "",
                 token: authToken
             };
