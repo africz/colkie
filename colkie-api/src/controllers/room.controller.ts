@@ -15,23 +15,29 @@ import {
   sendMessage,
 } from '../interfaces';
 import { ColkieController, ResponseError, ResponseSuccess } from './colkie.controller';
-import { Room } from '../models';
+import { Room, RoomUser, User } from '../models';
 import { RoomRepository } from '../repositories/room.repository';
+import { UserRepository } from '../repositories/user.repository';
+import { RoomUserRepository } from '../repositories/roomuser.repository';
 import { Response, RestBindings } from '@loopback/rest';
 import { inject } from '@loopback/core';
-import { validateString, validateToken } from '../helpers/validate';
+import { validateString, validateToken, validateRoom } from '../helpers/validate';
 
 /**
  * This controller handle all room related functions such as
- * login, authRoom, customerInf etc.
+ * add a user to a room, send a message  etc.
  */
 export class RoomController extends ColkieController {
   /**
    * Room controller handle all room related requests
    */
   constructor(
+    @repository(RoomUserRepository)
+    public roomUserRepository: RoomUserRepository,
     @repository(RoomRepository)
     public roomRepository: RoomRepository,
+    @repository(UserRepository)
+    public userRepository: UserRepository,
     @inject(RestBindings.Http.RESPONSE) private response: Response
   ) {
     super();
@@ -142,6 +148,13 @@ export class RoomController extends ColkieController {
    * }
    */
 
+  /**
+   * Add a user to a room
+   *
+   * @async
+   * @param {addUser} data
+   * @returns {Promise<Response>}
+   */
   @post(constants.A_ADD_USER)
   @response(200, ResponseSuccess)
   @response(400, ResponseError)
@@ -167,6 +180,39 @@ export class RoomController extends ColkieController {
       const { room, username, token } = data;
       await validateToken({ username: username, token: token });
       await this.validateAddUser(data);
+      const user = await this.getUser(username);
+
+      const filter = {
+        where: {
+          and: [
+            { roomid: room },
+            { userid: user.id },
+          ],
+        },
+      };
+      log.trace(func, 'filter:', filter);
+      const roomuser: any = await this.roomUserRepository
+        .findOne(filter)
+        .catch(error => {
+          log.error(func, 'error(findOne):', error);
+          throw new Error(error);
+        });
+      if (roomuser) {
+        log.error(func, "error:", errors.USER_EXISTS_IN_ROOM, "\nuser:", user, "\room:", room);
+        throw new Error(errors.USER_EXISTS_IN_ROOM);
+      }
+
+      const payload: any = new RoomUser();
+      payload.userid = user.id;
+      payload.roomid = room;
+      log.trace(func, 'payload:', payload);
+      await this.roomUserRepository
+        .create(payload)
+        .catch(error => {
+          log.trace(func, 'error(create):', error);
+          throw new Error(error);
+        });
+
       this.response.status(200).send({
         message: constants.RESULT_SUCCESS
       });
@@ -182,6 +228,10 @@ export class RoomController extends ColkieController {
   }//addUser
 
 
+  /**
+   * @param {any} data:sendMessage
+   * @returns {any}
+   */
   async validateMessage(data: sendMessage): Promise<any> {
     const func = await this.getFunc('validateCreateUser');
     log.trace(func, 'data:', data);
@@ -191,12 +241,43 @@ export class RoomController extends ColkieController {
     //validate message vulgar expressions for an example
   }
 
-  async validateAddUser(data: addUser): Promise<any> {
+  /**
+   * @param {addUser} data:addUser
+   * @returns {Promise<void>}
+   */
+  async validateAddUser(data: addUser): Promise<void> {
     const func = await this.getFunc('validateAddUser');
     log.trace(func, 'data:', data);
-    const { room, username } = data;
-    await validateString(username, { length: 20, empty: false, null: false });
-    //validate room valid room id for current user
-  }
+    const { room } = data;
+    await validateRoom(room);
+    //user already validated in auth process
+  }//validateAddUser
+
+  /**
+   * @param {string} username:string
+   * @returns {Promise<User>}
+   */
+  async getUser(username: string): Promise<User> {
+    const func = await this.getFunc('getUserId');
+    let filter = {
+      where: {
+        and: [
+          { username: username },
+        ],
+      },
+    };
+    log.trace(func, 'filter:', filter);
+    const user: any = await this.userRepository
+      .findOne(filter)
+      .catch(error => {
+        log.error(func, 'error(findOne):', error);
+        throw new Error(error);
+      });
+    if (!user) {
+      log.error(func, errors.USER_NOT_EXISTS, user);
+      throw new Error(errors.USER_NOT_EXISTS);
+    }
+    return user;
+  }//getUserId
 
 } //RoomController

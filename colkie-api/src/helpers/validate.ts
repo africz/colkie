@@ -38,7 +38,7 @@ export async function validateEmail(email: string): Promise<void> {
         throw new Error(errors.EMAIL_IS_INVALID);
     }
     log.warn(func, 'result', result);
-}
+}//validateEmail
 
 /**
  * @param  {validateToken} data
@@ -59,3 +59,22 @@ export async function validateToken(data: validateTokenParams): Promise<void> {
         throw new Error(errors.TOKEN_EXPIRED);
     }
 }//validateToken
+
+export async function validateRoom(room: number): Promise<void> {
+    const func = await getFunc('validateRoom', 'validate.ts');
+    log.trace(func, 'room', room);
+    const availableRooms = config.room.id;
+    let found = false;
+    availableRooms.forEach(item => {
+        if (room===item)
+        {
+            found=true;
+        }
+    });
+    if (!found)
+    {
+        throw new Error(errors.ROOM_IS_INVALID);
+    }
+}//validateRoom
+
+

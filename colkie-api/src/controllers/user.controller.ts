@@ -124,21 +124,21 @@ export class UserController extends ColkieController {
         throw new Error(errors.USER_EXISTS);
       }
 
-      const newUserRecord: any = new User();
-      newUserRecord.username = username;
-      newUserRecord.email = email;
-      newUserRecord.password = await this.encodePassword(password);
-      newUserRecord.firstname = firstname;
-      newUserRecord.lastname = lastname;
-      newUserRecord.token = await this.generateToken({ username: username, email: email, expireTime: 0 }).catch(error => {
+      const payload: any = new User();
+      payload.username = username;
+      payload.email = email;
+      payload.password = await this.encodePassword(password);
+      payload.firstname = firstname;
+      payload.lastname = lastname;
+      payload.token = await this.generateToken({ username: username, email: email, expireTime: 0 }).catch(error => {
         log.error(func, 'error(generateToken):', error);
         throw new Error(error);
       });
 
-      log.trace(func, 'newUserRecord:', newUserRecord);
+      log.trace(func, 'payload:', payload);
 
       await this.userRepository
-        .create(newUserRecord)
+        .create(payload)
         .catch(error => {
           log.trace(func, 'error(create):', error);
           throw new Error(error);

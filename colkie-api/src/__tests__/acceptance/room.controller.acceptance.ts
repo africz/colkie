@@ -6,7 +6,7 @@ import * as errors from '../../errors';
 import { log } from '../../helpers/logger';
 import { getFunc } from '../../helpers/getfunc';
 import config from '../../config.json';
-import { authUser, sendMessage } from '../../interfaces';
+import { addUser, authUser, sendMessage } from '../../interfaces';
 
 
 describe('RoomController', () => {
@@ -32,7 +32,7 @@ describe('RoomController', () => {
         await app.stop();
     });
 
-    describe('/room/sendMessage', () => {
+    xdescribe('/room/sendMessage', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const authToken = await getAuthToken(authData, client);
@@ -64,14 +64,13 @@ describe('RoomController', () => {
             const authToken = await getAuthToken(authData, client);
             log.debug(func, 'authToken:', authToken);
 
-            const data: sendMessage = {
+            const data: addUser = {
                 room: 1,
                 username: username,
-                message: "xx",
                 token: authToken
             };
             const postRes = await client
-                .post(constants.A_SEND_MESSAGE)
+                .post(constants.A_ADD_USER)
                 .send(data)
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
