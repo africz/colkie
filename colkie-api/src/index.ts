@@ -11,6 +11,14 @@ import {ApplicationConfig, ExpressServer} from './server';
 
 export * from './server';
 
+/**
+ * main
+ *
+ * @export
+ * @async
+ * @param {ApplicationConfig} [options={}]
+ * @returns {Promise<void>}
+ */
 export async function main(options: ApplicationConfig = {}): Promise<void> {
   const server = new ExpressServer(options);
   await server.boot();

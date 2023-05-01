@@ -1,3 +1,4 @@
+
 import { Client, expect } from '@loopback/testlab';
 import { ColkieApplication } from '../../application';
 import { getAuthToken, getNextTestValue, getRoomUser, getUserById, setupApplication } from './test-helper';

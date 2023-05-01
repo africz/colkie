@@ -12,6 +12,11 @@ import { log } from '../helpers/logger';
 import { UserRepository } from '../repositories';
 
 
+/**
+ * Success response on each calls
+ *
+ * @type {{ description: string; content: { 'application/json': { schema: { type: string; title: string; properties: { message: { type: string; }; }; }; }; }; }}
+ */
 export const ResponseSuccess = {
   description: 'Response success structure on each api calls',
   content: {
@@ -26,6 +31,11 @@ export const ResponseSuccess = {
     },
   },
 };
+/**
+ * Response error structure on each api calls',
+ *
+ * @type {{ description: string; content: { 'application/json': { schema: { type: string; title: string; properties: { message: { type: string; }; }; }; }; }; }}
+ */
 export const ResponseError = {
   description: 'Response error structure on each api calls',
   content: {
@@ -42,16 +52,47 @@ export const ResponseError = {
 };
 
 /**
- * Parent class of controllers
+ * Parent class of all controllers
  * @class
  */
 export class ColkieController {
+  /**
+   * Hold file name for logger 
+   * @protected
+   * @type {string}
+   */
   protected fileName: string;
+  /**
+   * 
+   * @protected
+   * @type {string}
+   */
   protected dbName: string;
+  /**
+   * Hold usernames for logging purpose
+   * empty in current project
+   * @static
+   * @type {Map<string, string>}
+   */
   static userNames: Map<string, string>;
+  /**
+   * @date 5/1/2023 - 12:35:03 PM
+   *
+   * @protected
+   * @type {UserRepository}
+   */
   @repository(UserRepository)
   protected userRepository: UserRepository;
+  /**
+   * Log is possible  by modules for an example
+   * one log for auth, another log for rooms etc
+   * @protected
+   * @type {*}
+   */
   protected moduleLoggers: any;
+  /**
+   * @constructor
+   */
   constructor() {
     if (!ColkieController.userNames) {
       ColkieController.userNames = new Map();

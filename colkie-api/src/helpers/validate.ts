@@ -6,6 +6,16 @@ import { validate } from 'deep-email-validator'
 import * as errors from '../errors';
 import jwt from "jsonwebtoken";
 
+/**
+ * Validate a string width different options
+ * such as length, empty, null allowed
+ *
+ * @export
+ * @async
+ * @param {string} data
+ * @param {validateString} options
+ * @returns {Promise<void>}
+ */
 export async function validateString(data: string, options: validateString): Promise<void> {
     const func = await getFunc('validateString', 'validate.ts');
     log.trace(func, 'data:', data, '\noptions:', options);
@@ -27,8 +37,18 @@ export async function validateString(data: string, options: validateString): Pro
     //check symbols TODO
     //check number TODO
 
-}
+}//validateString
 
+/**
+ * Validate email widh deep-email-validator library 
+ * currently only regexp option used
+ *
+ * @export
+ * @async
+ * @param {string} email
+ * @returns {Promise<void>}
+ * @link https://github.com/mfbx9da4/deep-email-validator#readme
+ */
 export async function validateEmail(email: string): Promise<void> {
     const func = await getFunc('validateEmail', 'validate.ts');
     log.trace(func, 'email', email);
@@ -41,8 +61,10 @@ export async function validateEmail(email: string): Promise<void> {
 }//validateEmail
 
 /**
+ * Validate JWT token 
  * @param  {validateToken} data
  * @returns {Promise<void> }
+ * @link https://github.com/auth0/node-jsonwebtoken#readme
  */
 export async function validateToken(data: validateTokenParams): Promise<void> {
     const func = await getFunc('validateToken', 'validate.ts');
@@ -60,6 +82,14 @@ export async function validateToken(data: validateTokenParams): Promise<void> {
     }
 }//validateToken
 
+/**
+ * Validate room id is valid or not from config.json
+ *
+ * @export
+ * @async
+ * @param {number} room
+ * @returns {Promise<void>}
+ */
 export async function validateRoom(room: number): Promise<void> {
     const func = await getFunc('validateRoom', 'validate.ts');
     log.trace(func, 'room', room);

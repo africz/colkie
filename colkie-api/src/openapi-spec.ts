@@ -1,3 +1,4 @@
+
 import {ApplicationConfig} from '@loopback/core';
 import {ColkieApplication} from './application';
 

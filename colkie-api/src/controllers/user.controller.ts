@@ -22,7 +22,7 @@ import { inject } from '@loopback/core';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from '../config.json';
-import { validateEmail, validateString,validateToken } from '../helpers/validate';
+import { validateEmail, validateString, validateToken } from '../helpers/validate';
 
 /**
  * This controller handle all user related functions such as
@@ -46,17 +46,19 @@ export class UserController extends ColkieController {
    * @apicall URL - /users/createUser
    * @param  {requestBody} requestBody
    * @param  {createUser} data
-   * @returns {Promise<any>}
+   * @returns {Promise<Response>}
    * @example
    *
    * Request Data
    * ------------
    * {
+   *    "authname":"testuser",
    *    "username":"testuser",
    *    "password":"testpassword",
    *    "email":"testemail@dummy.com",
    *    "firstname":"testfirstname",
    *    "lastname":"testlastname",
+   *    "token":"token",
    * }
    *
    * Response Success
@@ -100,7 +102,7 @@ export class UserController extends ColkieController {
     const func = await this.getFunc('createUser');
     log.info(func, 'data:', data);
     try {
-      const {authname,username, password, email, firstname, lastname, token } = data;
+      const { authname, username, password, email, firstname, lastname, token } = data;
       //token is validated here due this is the most important validation, not hidden
       //in validateCreateUser to make it visible as possible.
       await validateToken({ username: authname, token: token });
@@ -162,7 +164,7 @@ export class UserController extends ColkieController {
    * @apicall URL - /users/authUser
    * @param  {requestBody} requestBody
    * @param  {authUser} data
-   * @returns {Promise<any>}
+   * @returns {Promise<Response>}
    * @example
    *
    * Request Data
@@ -187,7 +189,7 @@ export class UserController extends ColkieController {
    * --------------
    * {
    *    "status":400,
-   *    "message":"Password not match!"
+   *    "message":<Error reason>
    * }
    */
 
@@ -262,7 +264,8 @@ export class UserController extends ColkieController {
   }//authUser
 
 
-  /**
+  /** 
+   * Encode a password to database storage
    * @param  {string} password
    * @returns {Promise<string> encodePassword}
    */
@@ -276,6 +279,7 @@ export class UserController extends ColkieController {
   }//encodePassword
 
   /**
+   * Generate a jwt web token
    * @param  {token} data 
    * @returns {Promise<string> encoded token}
    */
@@ -288,30 +292,41 @@ export class UserController extends ColkieController {
     log.trace(func, 'token expireTime:', new Date(data.expireTime).toLocaleTimeString());
     const retVal = jwt.sign(data, config.tokenSalt);
     return retVal;
-  }
+  }//generateToken
 
 
-  async validateAuthUser(data: authUser): Promise<any> {
+  /**
+   * Validate /users/authUser call
+   * @async
+   * @param {authUser} data
+   * @returns {Promise<void>}
+   */
+  async validateAuthUser(data: authUser): Promise<void> {
     const func = await this.getFunc('validateAuthUser');
     log.trace(func, 'data:', data);
     const { username, password } = data;
-    await validateString(username, { length: 20, empty: false, null: false});
+    await validateString(username, { length: 20, empty: false, null: false });
     //not finished the validation process to check symbols, numbers etc I would like to save some time
     await validateString(password, { length: 100, empty: false, null: false, symbol: true });
   }//validateAuthUser
 
-  async validateCreateUser(data: createUser): Promise<any> {
+  /**
+   * Validate /users/createUser call
+   *
+   * @async
+   * @param {createUser} data
+   * @returns {Promise<void>}
+   */
+  async validateCreateUser(data: createUser): Promise<void> {
     const func = await this.getFunc('validateCreateUser');
     log.trace(func, 'data:', data);
     const { username, password, email, firstname, lastname } = data;
     await validateString(username, { length: 20, empty: false, null: false });
-    await validateString(password, { length: 100, empty: false, null: false, symbol: true,number:true });
+    await validateString(password, { length: 100, empty: false, null: false, symbol: true, number: true });
     await validateEmail(email);
     await validateString(firstname, { length: 20, empty: false, null: false });
     await validateString(lastname, { length: 20, empty: false, null: false });
     //token is validated first in the main function
-  }
-
-
+  }//validateCreateUser
 
 } //UserController

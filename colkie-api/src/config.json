@@ -12,7 +12,8 @@
             1,
             11,
             99
-        ]
+        ],
+        "max_limit": 250
     },
     "rest": {
         "ssl_key": "/var/www/html/certs/colkie-key.pem",

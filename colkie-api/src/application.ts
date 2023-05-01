@@ -16,9 +16,24 @@ import path from 'path';
 import {MySequence} from './sequence';
 export {ApplicationConfig};
 
+/**
+ * Colkie sample application
+ *
+ * @export
+ * @class ColkieApplication
+ * @typedef {ColkieApplication}
+ * @extends {BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+)}
+ */
 export class ColkieApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
+  /**
+   *
+   * @public
+   * @type {number}
+   */
   public delay = 0;
   /**
    * @param  {ApplicationConfig={}} options

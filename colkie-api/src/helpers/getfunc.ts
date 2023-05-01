@@ -1,4 +1,8 @@
-/**
+/** 
+ * Get current function name and decorate 
+ * with some parameters if apply like current module
+ * username etc.
+ * Used for logging purpose only.
  * @param  {string} func
  * @param  {string} fileName
  * @param  {string|null} caller?

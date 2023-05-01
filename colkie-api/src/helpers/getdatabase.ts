@@ -2,6 +2,9 @@ import config from '../config.json';
 import {getFunc} from './getfunc';
 import {log} from './logger';
 /**
+ * Swich the database to testdatabase if defined in config for unit tests
+ * to not pollute the real one with test data.
+ * Usuall this is happen only at end of development cycle in beta stage. 
  * @param  {string} func
  * @param  {string} fileName
  * @param  {string|null} caller?
@@ -27,4 +30,4 @@ export function getDatabase(caller: string): string {
   }
   log.trace(func, 'selected database:', retVal);
   return retVal;
-}
+}//getDatabase

@@ -1,5 +1,5 @@
 /**
- * Constant definitions
+ * Constant error definitions
  * @module errors
  * version 0.0.1
  * @copyright Attila Fricz.

@@ -22,7 +22,8 @@ import { UserRepository } from '../repositories/user.repository';
 import { RoomUserRepository } from '../repositories/roomuser.repository';
 import { Response, RestBindings } from '@loopback/rest';
 import { inject } from '@loopback/core';
-import { validateString, validateToken, validateRoom } from '../helpers/validate';
+import { validateToken, validateRoom } from '../helpers/validate';
+import config from '../config.json';
 
 /**
  * This controller handle all room related functions such as
@@ -49,8 +50,8 @@ export class RoomController extends ColkieController {
    * Send a message to the room
    * @apicall URL - /rooms/sendMessage
    * @param  {requestBody} requestBody
-   * @param  {createRoom} data
-   * @returns {Promise<any>}
+   * @param  {sendMessage} data
+   * @returns {Promise<Response>}
    * @example
    *
    * Request Data
@@ -135,8 +136,8 @@ export class RoomController extends ColkieController {
  * Get messages
  * @apicall URL - /rooms/getMessages
  * @param  {requestBody} requestBody
- * @param  {createRoom} data
- * @returns {Promise<any>}
+ * @param  {getMessages} data
+ * @returns {Promise<Response>}
  * @example
  *
  * Request Data
@@ -253,18 +254,19 @@ export class RoomController extends ColkieController {
 
 
   /**
-   * Send a message to the room
+   * Add a user to a room
+   * @async
    * @apicall URL - /rooms/addUser
-   * @param  {requestBody} requestBody
-   * @param  {createRoom} data
-   * @returns {Promise<any>}
+   * @param   {requestBody} requestBody
+   * @param   {addUser} data
+   * @returns {Promise<Response>}
    * @example
    *
    * Request Data
    * ------------
    * {
-   *    "room":"testroom",
    *    "username":"testname",
+   *    "room":"testroom",
    *    "token":"auth token",
    * }
    *
@@ -281,14 +283,7 @@ export class RoomController extends ColkieController {
    *    "status": 400,
    *    "message": <Error reason>
    * }
-   */
-
-  /**
-   * Add a user to a room
    *
-   * @async
-   * @param {addUser} data
-   * @returns {Promise<Response>}
    */
   @post(constants.A_ADD_USER)
   @response(200, ResponseSuccess)
@@ -365,6 +360,7 @@ export class RoomController extends ColkieController {
 
 
   /**
+   * Validate /room/sendMessage
    * @param {any} data:sendMessage
    * @returns {any}
    */
@@ -378,6 +374,7 @@ export class RoomController extends ColkieController {
 
 
   /**
+   * Validate /room/getMessages call
    * @param {any} data:getMessages
    * @returns {any}
    */
@@ -390,7 +387,7 @@ export class RoomController extends ColkieController {
     if (!limit) {
       throw new Error(errors.LIMIT_IS_INVALID);
     }
-    if (limit > 250) {
+    if (limit > config.room.max_limit) {
       throw new Error(errors.LIMIT_IS_INVALID);
     }
 
@@ -401,7 +398,8 @@ export class RoomController extends ColkieController {
   }//validateGetMessages
 
 
-  /**
+  /** 
+   * Validate room param in /room/sendMessage api call
    * @param {sendMessage} data:sendMessage
    * @returns {Promise<void>}
    */
@@ -432,7 +430,7 @@ export class RoomController extends ColkieController {
     }
   }//validateRoomUser
 
-  /**
+  /** Validate a message in /room/sendMessage call
  * @param {sendMessage} data:sendMessage
  * @returns {Promise<void>}
  */
@@ -443,7 +441,8 @@ export class RoomController extends ColkieController {
   }//validateMessage
 
 
-  /**
+  /** 
+   * Validate /room/addUser call
    * @param {addUser} data:addUser
    * @returns {Promise<void>}
    */
@@ -455,7 +454,8 @@ export class RoomController extends ColkieController {
     //user already validated in auth process
   }//validateAddUser
 
-  /**
+  /** 
+   * Get a user object  by username
    * @param {string} username:string
    * @returns {Promise<User>}
    */

@@ -27,7 +27,7 @@ add a user to a room, send a message  etc.</p>
 <ul class="tsd-hierarchy">
 <li><span class="target">RoomController</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:31</li></ul></aside>
+<li>Defined in src/controllers/room.controller.ts:32</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -85,7 +85,7 @@ add a user to a room, send a message  etc.</p>
 <h4 class="tsd-returns-title">Returns <a href="controllers.RoomController.html" class="tsd-signature-type" data-tsd-kind="Class">RoomController</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in src/controllers/room.controller.ts:35</li></ul></aside></li></ul></section></section>
+<li>Defined in src/controllers/room.controller.ts:36</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="dbName" class="tsd-anchor"></a>
@@ -93,46 +93,58 @@ add a user to a room, send a message  etc.</p>
 <div class="tsd-signature">db<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#dbName">dbName</a></p>
 <ul>
-<li>Defined in src/controllers/colkie.controller.ts:50</li></ul></aside></section>
+<li>Defined in src/controllers/colkie.controller.ts:70</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="fileName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>file<wbr/>Name</span><a href="#fileName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">file<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature">file<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Hold file name for logger</p>
+</div><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#fileName">fileName</a></p>
 <ul>
-<li>Defined in src/controllers/colkie.controller.ts:49</li></ul></aside></section>
+<li>Defined in src/controllers/colkie.controller.ts:64</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="moduleLoggers" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>module<wbr/>Loggers</span><a href="#moduleLoggers" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">module<wbr/>Loggers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div><aside class="tsd-sources">
+<div class="tsd-signature">module<wbr/>Loggers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+<div class="tsd-comment tsd-typography"><p>Log is possible  by modules for an example
+one log for auth, another log for rooms etc</p>
+</div><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#moduleLoggers">moduleLoggers</a></p>
 <ul>
-<li>Defined in src/controllers/colkie.controller.ts:54</li></ul></aside></section>
+<li>Defined in src/controllers/colkie.controller.ts:92</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="response" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>response</span><a href="#response" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:42</li></ul></aside></section>
+<li>Defined in src/controllers/room.controller.ts:43</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="roomRepository" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>room<wbr/>Repository</span><a href="#roomRepository" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">room<wbr/>Repository<span class="tsd-signature-symbol">:</span> <a href="repositories.RoomRepository.html" class="tsd-signature-type" data-tsd-kind="Class">RoomRepository</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:39</li></ul></aside></section>
+<li>Defined in src/controllers/room.controller.ts:40</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="roomUserRepository" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>room<wbr/>User<wbr/>Repository</span><a href="#roomUserRepository" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">room<wbr/>User<wbr/>Repository<span class="tsd-signature-symbol">:</span> <a href="repositories.RoomUserRepository.html" class="tsd-signature-type" data-tsd-kind="Class">RoomUserRepository</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:37</li></ul></aside></section>
+<li>Defined in src/controllers/room.controller.ts:38</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="userRepository" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>user<wbr/>Repository</span><a href="#userRepository" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">user<wbr/>Repository<span class="tsd-signature-symbol">:</span> <a href="repositories.UserRepository.html" class="tsd-signature-type" data-tsd-kind="Class">UserRepository</a></div><aside class="tsd-sources">
+<div class="tsd-signature">user<wbr/>Repository<span class="tsd-signature-symbol">:</span> <a href="repositories.UserRepository.html" class="tsd-signature-type" data-tsd-kind="Class">UserRepository</a></div>
+<div class="tsd-comment tsd-typography">
+<h3>Date</h3><p>5/1/2023 - 12:35:03 PM</p>
+</div><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#userRepository">userRepository</a></p>
 <ul>
-<li>Defined in src/controllers/room.controller.ts:41</li></ul></aside></section>
+<li>Defined in src/controllers/room.controller.ts:42</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="userNames" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>user<wbr/>Names</span><a href="#userNames" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">user<wbr/>Names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
+<div class="tsd-signature">user<wbr/>Names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+<div class="tsd-comment tsd-typography"><p>Hold usernames for logging purpose
+empty in current project</p>
+
+<h3>Static</h3></div><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#userNames">userNames</a></p>
 <ul>
-<li>Defined in src/controllers/colkie.controller.ts:51</li></ul></aside></section></section>
+<li>Defined in src/controllers/colkie.controller.ts:77</li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="addUser" class="tsd-anchor"></a>
@@ -143,7 +155,12 @@ add a user to a room, send a message  etc.</p>
 <div class="tsd-comment tsd-typography"><p>Add a user to a room</p>
 
 <h3>Async</h3>
-<h3>Returns</h3></div>
+<h3>Apicall</h3><p>URL - /rooms/addUser</p>
+
+<h3>Returns</h3>
+<h3>Example</h3><pre><code class="language-ts"><span class="hl-2">Request</span><span class="hl-1"> </span><span class="hl-2">Data</span><br/><span class="hl-1">------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;username&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testname&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;room&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testroom&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;token&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;auth token&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">Response</span><span class="hl-1"> </span><span class="hl-2">Success</span><br/><span class="hl-1">----------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;status&quot;</span><span class="hl-1">:</span><span class="hl-9">200</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;message&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;Success&quot;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">Response</span><span class="hl-1"> </span><span class="hl-2">Error</span><br/><span class="hl-1">--------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;status&quot;</span><span class="hl-1">: </span><span class="hl-9">400</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;message&quot;</span><span class="hl-1">: &lt;</span><span class="hl-7">Error</span><span class="hl-1"> </span><span class="hl-7">reason</span><span class="hl-1">&gt;</span><br/><span class="hl-1">}</span>
+</code></pre>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -151,7 +168,7 @@ add a user to a room, send a message  etc.</p>
 <h5>data: <a href="../interfaces/interfaces.addUser.html" class="tsd-signature-type" data-tsd-kind="Interface">addUser</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:282</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:288</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="createModuleLogger" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>create<wbr/>Module<wbr/>Logger</span><a href="#createModuleLogger" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -165,7 +182,7 @@ void</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#createModuleLogger">createModuleLogger</a></p>
 <ul>
-<li>Defined in src/controllers/colkie.controller.ts:96</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/colkie.controller.ts:137</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="getFunc" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Func</span><a href="#getFunc" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -190,7 +207,7 @@ void</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="controllers.ColkieController.html">ColkieController</a>.<a href="controllers.ColkieController.html#getFunc">getFunc</a></p>
 <ul>
-<li>Defined in src/controllers/colkie.controller.ts:80</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/colkie.controller.ts:121</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getMessages" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Messages</span><a href="#getMessages" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -201,7 +218,7 @@ void</p>
 <h3>Apicall</h3><p>URL - /rooms/getMessages</p>
 
 <h3>Returns</h3>
-<h3>Example</h3><pre><code class="language-ts"><span class="hl-2">Request</span><span class="hl-1"> </span><span class="hl-2">Data</span><br/><span class="hl-1">------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;room&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testroom&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;username&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testname&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;limit&quot;</span><span class="hl-1">:</span><span class="hl-9">100</span><span class="hl-1">, </span><br/><span class="hl-1">   </span><span class="hl-3">&quot;token&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;auth token&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">Response</span><span class="hl-1"> </span><span class="hl-2">Success</span><br/><span class="hl-1">----------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;status&quot;</span><span class="hl-1">:</span><span class="hl-9">200</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;message&quot;</span><span class="hl-1">: </span><span class="hl-2">messages</span><span class="hl-1">[]</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">Response</span><span class="hl-1"> </span><span class="hl-2">Error</span><br/><span class="hl-1">--------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;status&quot;</span><span class="hl-1">: </span><span class="hl-9">400</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;message&quot;</span><span class="hl-1">: &lt;</span><span class="hl-7">Error</span><span class="hl-1"> </span><span class="hl-7">reason</span><span class="hl-1">&gt;</span><br/><span class="hl-1">}</span>
+<h3>Example</h3><pre><code class="language-ts"><span class="hl-2">Request</span><span class="hl-1"> </span><span class="hl-2">Data</span><br/><span class="hl-1">------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;authname&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testname&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;username&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testname&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;room&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;testroom&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;start&quot;</span><span class="hl-1">: </span><span class="hl-9">4</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;limit&quot;</span><span class="hl-1">:</span><span class="hl-9">100</span><span class="hl-1">, </span><br/><span class="hl-1">   </span><span class="hl-3">&quot;token&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;auth token&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">Response</span><span class="hl-1"> </span><span class="hl-2">Success</span><br/><span class="hl-1">----------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;status&quot;</span><span class="hl-1">:</span><span class="hl-9">200</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;message&quot;</span><span class="hl-1">: </span><span class="hl-2">messages</span><span class="hl-1">[]</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">Response</span><span class="hl-1"> </span><span class="hl-2">Error</span><br/><span class="hl-1">--------------</span><br/><span class="hl-1">{</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;status&quot;</span><span class="hl-1">: </span><span class="hl-9">400</span><span class="hl-1">,</span><br/><span class="hl-1">   </span><span class="hl-3">&quot;message&quot;</span><span class="hl-1">: &lt;</span><span class="hl-7">Error</span><span class="hl-1"> </span><span class="hl-7">reason</span><span class="hl-1">&gt;</span><br/><span class="hl-1">}</span>
 </code></pre>
 </div>
 <div class="tsd-parameters">
@@ -211,13 +228,14 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.getMessages.html" class="tsd-signature-type" data-tsd-kind="Interface">getMessages</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:166</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:169</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getUser" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>User</span><a href="#getUser" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getUser.getUser-1">get<wbr/>User<span class="tsd-signature-symbol">(</span>username<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="models.User.html" class="tsd-signature-type" data-tsd-kind="Class">User</a><span class="tsd-signature-symbol">&gt;</span><a href="#getUser.getUser-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>Get a user object  by username</p>
+
 <h3>Returns</h3></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -226,7 +244,7 @@ void</p>
 <h5>username: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="models.User.html" class="tsd-signature-type" data-tsd-kind="Class">User</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:444</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:462</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="sendMessage" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>send<wbr/>Message</span><a href="#sendMessage" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -247,13 +265,14 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:80</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:81</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="validateAddUser" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>validate<wbr/>Add<wbr/>User</span><a href="#validateAddUser" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="validateAddUser.validateAddUser-1">validate<wbr/>Add<wbr/>User<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/interfaces.addUser.html" class="tsd-signature-type" data-tsd-kind="Interface">addUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#validateAddUser.validateAddUser-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>Validate /room/addUser call</p>
+
 <h3>Returns</h3></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -262,13 +281,14 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.addUser.html" class="tsd-signature-type" data-tsd-kind="Interface">addUser</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:432</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:449</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="validateGetMessages" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>validate<wbr/>Get<wbr/>Messages</span><a href="#validateGetMessages" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="validateGetMessages.validateGetMessages-1">validate<wbr/>Get<wbr/>Messages<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/interfaces.getMessages.html" class="tsd-signature-type" data-tsd-kind="Interface">getMessages</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><a href="#validateGetMessages.validateGetMessages-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>Validate /room/getMessages call</p>
+
 <h3>Returns</h3></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -277,13 +297,14 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.getMessages.html" class="tsd-signature-type" data-tsd-kind="Interface">getMessages</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:373</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:381</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="validateMessage" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>validate<wbr/>Message</span><a href="#validateMessage" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="validateMessage.validateMessage-1">validate<wbr/>Message<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#validateMessage.validateMessage-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>Validate a message in /room/sendMessage call</p>
+
 <h3>Returns</h3></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -292,13 +313,14 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:421</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:437</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="validateRoomUser" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>validate<wbr/>Room<wbr/>User</span><a href="#validateRoomUser" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="validateRoomUser.validateRoomUser-1">validate<wbr/>Room<wbr/>User<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#validateRoomUser.validateRoomUser-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>Validate room param in /room/sendMessage api call</p>
+
 <h3>Returns</h3></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -307,13 +329,14 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:390</li></ul></aside></li></ul></section>
+<li>Defined in src/controllers/room.controller.ts:406</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="validateSendMessage" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>validate<wbr/>Send<wbr/>Message</span><a href="#validateSendMessage" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="validateSendMessage.validateSendMessage-1">validate<wbr/>Send<wbr/>Message<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><a href="#validateSendMessage.validateSendMessage-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>Validate /room/sendMessage</p>
+
 <h3>Returns</h3></div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -322,7 +345,7 @@ void</p>
 <h5>data: <a href="../interfaces/interfaces.sendMessage.html" class="tsd-signature-type" data-tsd-kind="Interface">sendMessage</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/controllers/room.controller.ts:360</li></ul></aside></li></ul></section></section></div>
+<li>Defined in src/controllers/room.controller.ts:367</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
