@@ -6,7 +6,8 @@ RUN apk add \
             unzip \
             mc \
             vim \
-            findutils-locate 
+            findutils-locate \
+            lynx		
  
 ENV NODE_ENV=development
 WORKDIR /var/www/html
