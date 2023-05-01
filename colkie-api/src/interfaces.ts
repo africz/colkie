@@ -51,9 +51,10 @@ export interface sendMessage {
   token: string;
 }
 export interface getMessages {
-  room: number;
-  username: string;
-  limit: number;
+  authname:string;
+  username?: string;
+  room?: number;
+  limit?: number;
   token: string;
 }
 

@@ -253,8 +253,64 @@ describe('RoomController', () => {
             log.debug(func, 'authToken:', authToken);
 
             const data: getMessages = {
-                room: 1,
+                authname: user.username,
                 username: user.username,
+                room: 1,
+                limit:5,
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_GET_MESSAGES)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.Array;
+        })
+        it('username,limit 5 success', async () => {
+            const func = await getFunc('username,limit 5 success', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: getMessages = {
+                authname: user.username,
+                username: user.username,
+                limit:5,
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_GET_MESSAGES)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.Array;
+        })
+        it('limit 5 success', async () => {
+            const func = await getFunc('limit 5 success', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: getMessages = {
+                authname: user.username,
                 limit:5,
                 token: authToken
             };

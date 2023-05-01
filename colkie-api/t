@@ -1,2 +1,0 @@
-rm -rf log/*.*
-npm run test
