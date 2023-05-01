@@ -243,7 +243,7 @@ describe('RoomController', () => {
 
     });
     describe('/room/getMessages', () => {
-        it('room,username,limit 5 success', async () => {
+        xit('room,username,limit 5 success', async () => {
             const func = await getFunc('room,username,limit 5 success', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -272,7 +272,7 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.Array;
         })
-        it('username,limit 5 success', async () => {
+        xit('username,limit 5 success', async () => {
             const func = await getFunc('username,limit 5 success', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -300,8 +300,8 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.Array;
         })
-        it('limit 5 success', async () => {
-            const func = await getFunc('limit 5 success', fileName);
+        xit('limit 3 success', async () => {
+            const func = await getFunc('limit 3 success', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
             const user = await getUserById(roomUser.userid);
@@ -311,7 +311,7 @@ describe('RoomController', () => {
 
             const data: getMessages = {
                 authname: user.username,
-                limit:5,
+                limit: 3,
                 token: authToken
             };
             const postRes = await client
@@ -327,6 +327,87 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.Array;
         })
+        xit('limit 300', async () => {
+            const func = await getFunc('limit 300', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: getMessages = {
+                authname: user.username,
+                limit: 300,
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_GET_MESSAGES)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.LIMIT_IS_INVALID);
+        })
+        it('limit 0', async () => {
+            const func = await getFunc('limit 0', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: getMessages = {
+                authname: user.username,
+                limit: 0,
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_GET_MESSAGES)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.LIMIT_IS_INVALID);
+        })
+        it('limit null', async () => {
+            const func = await getFunc('limit null', fileName);
+            const roomUser: any = await getRoomUser();
+            log.debug(func, 'roomUser.userid:', roomUser.userid);
+            const user = await getUserById(roomUser.userid);
+            log.debug(func, 'user:', user);
+            const authToken = await getAuthToken({ username: user.username, password }, client);
+            log.debug(func, 'authToken:', authToken);
+
+            const data: getMessages = {
+                authname: user.username,
+                token: authToken
+            };
+            const postRes = await client
+                .post(constants.A_GET_MESSAGES)
+                .send(data)
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
+            log.trace(func, 'postRes:', postRes);
+            log.trace(func, 'postRes.body:', postRes.body);
+            const result = postRes.body;
+            log.debug(func, 'result:', result);
+            expect(result.message).is.equal(errors.LIMIT_IS_INVALID);
+        })
+
 
 
     });

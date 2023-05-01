@@ -198,14 +198,11 @@ export class RoomController extends ColkieController {
             },
             room: {
               eq: room,
-            },
-            limit: {
-              eq: limit,
             }
           },
           limit: limit
         };
-      } else if (username && limit) {
+      } else if (username && limit && !room) {
         filter = {
           where: {
             username: {
@@ -217,8 +214,17 @@ export class RoomController extends ColkieController {
           },
           limit: limit
         };
+      } else if (!username && limit && !room) {
+        filter = {
+          where: {
+            id: {
+              gt: 0,
+            }
+          },
+          limit: limit
+        };
       }
-
+      log.debug(func, 'filter', filter);
       const messages: any = await this.roomRepository.find(filter)
         .catch(error => {
           log.error(func, 'error(findOne):', error);
@@ -376,7 +382,14 @@ export class RoomController extends ColkieController {
     //username is validated by token already
     const { room, limit } = data;
     if (room) await validateRoom(room);
-    if (limit && limit < 0) {
+    if (!limit) {
+      throw new Error(errors.LIMIT_IS_INVALID);
+    }
+    if (limit > 250) {
+      throw new Error(errors.LIMIT_IS_INVALID);
+    }
+
+    if (limit && limit <= 0) {
       throw new Error(errors.LIMIT_IS_INVALID);
     }
 
