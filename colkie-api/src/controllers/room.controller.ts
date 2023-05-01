@@ -142,8 +142,10 @@ export class RoomController extends ColkieController {
  * Request Data
  * ------------
  * {
- *    "room":"testroom",
+ *    "authname":"testname",
  *    "username":"testname",
+ *    "room":"testroom",
+ *    "start": 4,
  *    "limit":100, 
  *    "token":"auth token",
  * }
@@ -186,7 +188,7 @@ export class RoomController extends ColkieController {
     const func = await this.getFunc('getMessages');
     log.info(func, 'data:', data);
     try {
-      const { authname, username, room, limit, token } = data;
+      const { authname, username, room, start, limit, token } = data;
       await validateToken({ username: authname, token: token });
       await this.validateGetMessages(data);
       let filter = {};
@@ -198,6 +200,9 @@ export class RoomController extends ColkieController {
             },
             room: {
               eq: room,
+            },
+            id: {
+              gt: start,
             }
           },
           limit: limit
@@ -208,8 +213,8 @@ export class RoomController extends ColkieController {
             username: {
               like: `%${username}%`,
             },
-            limit: {
-              eq: limit,
+            id: {
+              gt: start,
             }
           },
           limit: limit
@@ -218,7 +223,7 @@ export class RoomController extends ColkieController {
         filter = {
           where: {
             id: {
-              gt: 0,
+              gt: start,
             }
           },
           limit: limit

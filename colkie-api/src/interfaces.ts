@@ -54,7 +54,8 @@ export interface getMessages {
   authname:string;
   username?: string;
   room?: number;
-  limit?: number;
+  start:number;
+  limit: number;
   token: string;
 }
 

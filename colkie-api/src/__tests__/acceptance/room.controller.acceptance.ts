@@ -33,7 +33,7 @@ describe('RoomController', () => {
         await app.stop();
     });
 
-    xdescribe('/room/addUser', () => {
+    describe('/room/addUser', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             //authentication for create a new user
@@ -154,7 +154,7 @@ describe('RoomController', () => {
         })
 
     });
-    xdescribe('/room/sendMessage', () => {
+    describe('/room/sendMessage', () => {
         it('success', async () => {
             const func = await getFunc('success', fileName);
             const roomUser: any = await getRoomUser();
@@ -243,7 +243,7 @@ describe('RoomController', () => {
 
     });
     describe('/room/getMessages', () => {
-        xit('room,username,limit 5 success', async () => {
+        it('room,username,limit 5 success', async () => {
             const func = await getFunc('room,username,limit 5 success', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -256,6 +256,7 @@ describe('RoomController', () => {
                 authname: user.username,
                 username: user.username,
                 room: 1,
+                start:0,
                 limit:5,
                 token: authToken
             };
@@ -272,7 +273,7 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.Array;
         })
-        xit('username,limit 5 success', async () => {
+        it('username,limit 5 success', async () => {
             const func = await getFunc('username,limit 5 success', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -284,6 +285,7 @@ describe('RoomController', () => {
             const data: getMessages = {
                 authname: user.username,
                 username: user.username,
+                start:0,
                 limit:5,
                 token: authToken
             };
@@ -300,7 +302,7 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.Array;
         })
-        xit('limit 3 success', async () => {
+        it('limit 3 success', async () => {
             const func = await getFunc('limit 3 success', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -311,6 +313,7 @@ describe('RoomController', () => {
 
             const data: getMessages = {
                 authname: user.username,
+                start:0,
                 limit: 3,
                 token: authToken
             };
@@ -327,7 +330,7 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.Array;
         })
-        xit('limit 300', async () => {
+        it('invalid limit 300', async () => {
             const func = await getFunc('limit 300', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -338,6 +341,7 @@ describe('RoomController', () => {
 
             const data: getMessages = {
                 authname: user.username,
+                start:0,
                 limit: 300,
                 token: authToken
             };
@@ -354,7 +358,7 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.equal(errors.LIMIT_IS_INVALID);
         })
-        it('limit 0', async () => {
+        it('invalid limit <=0', async () => {
             const func = await getFunc('limit 0', fileName);
             const roomUser: any = await getRoomUser();
             log.debug(func, 'roomUser.userid:', roomUser.userid);
@@ -365,6 +369,7 @@ describe('RoomController', () => {
 
             const data: getMessages = {
                 authname: user.username,
+                start:0,
                 limit: 0,
                 token: authToken
             };
@@ -381,35 +386,6 @@ describe('RoomController', () => {
             log.debug(func, 'result:', result);
             expect(result.message).is.equal(errors.LIMIT_IS_INVALID);
         })
-        it('limit null', async () => {
-            const func = await getFunc('limit null', fileName);
-            const roomUser: any = await getRoomUser();
-            log.debug(func, 'roomUser.userid:', roomUser.userid);
-            const user = await getUserById(roomUser.userid);
-            log.debug(func, 'user:', user);
-            const authToken = await getAuthToken({ username: user.username, password }, client);
-            log.debug(func, 'authToken:', authToken);
-
-            const data: getMessages = {
-                authname: user.username,
-                token: authToken
-            };
-            const postRes = await client
-                .post(constants.A_GET_MESSAGES)
-                .send(data)
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(400);
-
-            log.trace(func, 'postRes:', postRes);
-            log.trace(func, 'postRes.body:', postRes.body);
-            const result = postRes.body;
-            log.debug(func, 'result:', result);
-            expect(result.message).is.equal(errors.LIMIT_IS_INVALID);
-        })
-
-
-
     });
 
 });

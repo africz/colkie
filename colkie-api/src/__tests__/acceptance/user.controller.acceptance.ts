@@ -9,7 +9,7 @@ import config from '../../config.json';
 import { authUser, createUser } from '../../interfaces';
 
 
-xdescribe('UserController', () => {
+describe('UserController', () => {
     let app: ColkieApplication;
     let client: Client;
     let username: string;
