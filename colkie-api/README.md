@@ -1,12 +1,13 @@
-# COLKIE - Typescript Code Challange #
+## Questions ? ##
+Attila Fricz +34-623 1917 89 (WhatisApp) is available.
+attila.fricz@gmail.com
 
 ## Install ##
-
-- setup docker,git in your computer
+    - setup docker,git in your computer
     - clone project from Github https://github.com/africz/colkie
       git clone git@github.com:africz/colkie.git 
 
-- run docker desktop first
+    - run docker desktop first
     if it has conflict with docker engine
     stop docker engine with sudo systemctl stop docker.
 
@@ -17,6 +18,10 @@
     - start docker system with ./st bash script. 
     I didn't set application to autostart in the container, more informative and more convience to me if I run it by myself in a terminal 
     window and I able to see the application messages in terminal window while I develop the application.
+
+    - import initial database
+    use ./dbi colkie-init.sql to import initial database
+    sql file must be exists in colkie-api/sql folder
 
 ## Run application ##
     - launch ./r to run the application
@@ -74,6 +79,9 @@
         - room      - chat rooms hold the messages
         - roomuser  - logged in users to different rooms 
         - user      - users of the system
+        
+        use ./dbi colkie-init.sql to import initial database
+        sql file must be exists in colkie-api/sql folder
 
 ## Logging ##
     Logging system features.

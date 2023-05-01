@@ -1,0 +1,11 @@
+DB=colkie
+USER=colkie
+PASS=colkie
+#!/bin/bash
+if [ -z "$1" ]; then
+    # Variable is empty
+    echo "Parameter is missing!! ex any sql file from colkie-api/sql folder"
+    exit
+fi
+docker exec -it db-$DB mysql -u $USER -p$PASS -e "source /var/www/sql/$1" $DB
+

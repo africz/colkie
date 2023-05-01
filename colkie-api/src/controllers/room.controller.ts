@@ -133,38 +133,54 @@ export class RoomController extends ColkieController {
 
 
   /**
- * Get messages
- * @apicall URL - /rooms/getMessages
- * @param  {requestBody} requestBody
- * @param  {getMessages} data
- * @returns {Promise<Response>}
- * @example
- *
- * Request Data
- * ------------
- * {
- *    "authname":"testname",
- *    "username":"testname",
- *    "room":"testroom",
- *    "start": 4,
- *    "limit":100, 
- *    "token":"auth token",
- * }
- *
- * Response Success
- * ----------------
- * {
- *    "status":200,
- *    "message": messages[]
- * }
- *
- * Response Error
- * --------------
- * {
- *    "status": 400,
- *    "message": <Error reason>
- * }
- */
+  * Get messages from any rooms
+  * - start is id of the rooms table this is identify
+  *   the smallest id that you will retrieve in the batch.
+  * - limit is number of recors in the batch.
+  *   For an example with start = 50, limit =10 
+  *   you will get 10 records from id 50 to id 60.  
+  * - by user
+  *   fill username limit and start don't use room.
+  *   filter use like% on user names.
+  * - by room
+  *   fill room, start and limit but don't use username
+  * - by user, room 
+  *   fill all and you will get user in room only.
+  * - use only limit and start and you will get all rooms and 
+  *   users in this range. 
+  * 
+  * 
+  * @apicall URL - /rooms/getMessages
+  * @param  {requestBody} requestBody
+  * @param  {getMessages} data
+  * @returns {Promise<Response>}
+  * @example
+  *
+  * Request Data
+  * ------------
+  * {
+  *    "authname":"testname",
+  *    "username":"testname",
+  *    "room":"testroom",
+  *    "start": 4,
+  *    "limit":100, 
+  *    "token":"auth token",
+  * }
+  *
+  * Response Success
+  * ----------------
+  * {
+  *    "status":200,
+  *    "message": messages[]
+  * }
+  *
+  * Response Error
+  * --------------
+  * {
+  *    "status": 400,
+  *    "message": <Error reason>
+  * }
+  */
 
   @post(constants.A_GET_MESSAGES)
   @response(200, ResponseSuccess)
@@ -206,6 +222,7 @@ export class RoomController extends ColkieController {
               gt: start,
             }
           },
+          order: ['room ASC', 'username ASC'],
           limit: limit
         };
       } else if (username && limit && !room) {
@@ -218,6 +235,20 @@ export class RoomController extends ColkieController {
               gt: start,
             }
           },
+          order: ['username ASC'],
+          limit: limit
+        };
+      } else if (!username && limit && room) {
+        filter = {
+          where: {
+            room: {
+              eq: room,
+            },
+            id: {
+              gt: start,
+            }
+          },
+          order: ['room ASC'],
           limit: limit
         };
       } else if (!username && limit && !room) {
